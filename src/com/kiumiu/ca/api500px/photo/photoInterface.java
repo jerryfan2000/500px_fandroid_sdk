@@ -194,6 +194,7 @@ public class photoInterface {
 	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
 	 * @param rpp the number of results to return. Can not be over 100, default 20.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_favorites.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject get_photos_id_favorites(String id, int page, int rpp) {
 		String request = id + "/favorites?";
@@ -218,6 +219,7 @@ public class photoInterface {
 	 * @param page return a specific page in the photo stream. Page numbering is 1-based.
 	 * @param rpp the number of results to return. Can not be over 100, default 20.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_votes.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject get_photos_id_votes(String id, int page, int rpp) {
 		String request = id + "/votes?";
@@ -316,6 +318,7 @@ public class photoInterface {
 	 * 500px POST_photos_id_favorite. adds the photo to user's list of favorites.
 	 * @param id ID of the photo to favorite.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_favorite.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_favorite(String id) {
 		String request = id + "/favorite";
@@ -352,6 +355,7 @@ public class photoInterface {
 	 * @param id ID of the photo to add tags.
 	 * @param tags (required) Ñ Coma separated tags.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_tags.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_tags(String id, String[] tags) {
 		String request = id + "/tags";
@@ -377,6 +381,7 @@ public class photoInterface {
 	 * @param id (required) Ñ The Photo ID to post comments for.
 	 * @param comments (required) Ñ Content of the comment.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_comments.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_comments(String id, String comments) {
 		String request = id + "/comments";
@@ -396,6 +401,7 @@ public class photoInterface {
 	 * @param id (required) Ñ ID of the photo the vote is cast upon.
 	 * @param like (required) Ñ vote, values: '0' for 'dislike' or '1' for 'like'.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_vote.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_vote(String id, boolean like) {
 		String request = id + "/vote?";
@@ -425,6 +431,7 @@ public class photoInterface {
 	 * @param query an array list of update query obtained from {@link photoUpdateParams} with photoUpdateParams.toNameValuePair.
 	 * @param id (required) Ñ The Photo ID to update.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/PUT_photos_id.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject put_photos_id(String id, ArrayList<NameValuePair> query) {
 		String request = id;

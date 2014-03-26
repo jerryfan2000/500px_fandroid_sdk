@@ -3,16 +3,12 @@ package com.kiumiu.ca.api500px.photo;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-
 import android.util.Log;
-
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
-import com.kiumiu.ca.api500px.Parameter;
 
 /**
  * A class which wraps all 500px REST photo end node functions 

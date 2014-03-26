@@ -254,7 +254,7 @@ public class photoUpdateParams {
 		if(nsfw)
 			query.add(new BasicNameValuePair("nsfw", "true"));
 		
-		if(license_type > 0)
+		if(license_type >= 0)
 			query.add(new BasicNameValuePair("license_type", "" + license_type));
 		
 		if(privacy)

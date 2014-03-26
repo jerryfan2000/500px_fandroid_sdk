@@ -207,6 +207,10 @@ public class photoUpdateParams {
 		return crop;
 	}
 	
+	/**
+	 * Generate name value pair to be used in updating photo with {@link photoInterface.put_photos_id}
+	 * @return return a properly formatted name value pair used for updating a photo.
+	 */
 	public ArrayList<NameValuePair> toNameValuePair() {
 		ArrayList<NameValuePair> query = new ArrayList<NameValuePair>();
 		if(name != null)
@@ -253,6 +257,8 @@ public class photoUpdateParams {
 		
 		if(nsfw)
 			query.add(new BasicNameValuePair("nsfw", "true"));
+		else 
+			query.add(new BasicNameValuePair("nsfw", "false"));
 		
 		if(license_type >= 0)
 			query.add(new BasicNameValuePair("license_type", "" + license_type));

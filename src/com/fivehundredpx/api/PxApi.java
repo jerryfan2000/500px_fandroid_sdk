@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.comments.commentInterface;
 import com.kiumiu.ca.api500px.photo.photoInterface;
 
 import java.io.BufferedReader;
@@ -87,11 +88,26 @@ public class PxApi {
     	return new PxApi(consumerKey, consumerSecret);
     }
  
+    /**
+     * Get an instance of photoInterface object
+     * @return An instance of photoInterface.
+     */
     public photoInterface getPhotoInterface() {
     	if(accessToken != null)
     		return new photoInterface(accessToken, consumerKey, consumerKey);
     	else
     		return new photoInterface(consumerKey, consumerKey);
+    }
+    
+    /**
+     * Get an instance of photoInterface object
+     * @return An instance of photoInterface. Return null if PxApi is not initialized with valid access token.
+     */
+    public commentInterface getCommentInterface() {
+    	if(accessToken != null)
+    		return new commentInterface(accessToken, consumerKey, consumerKey);
+    	else
+    		return null;
     }
 
 }

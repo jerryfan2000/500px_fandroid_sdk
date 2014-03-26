@@ -145,10 +145,10 @@ public class photoInterface {
 		StringBuilder builder = new StringBuilder(request);
 		
 		if(comments)
-			builder.append("comments&");
+			builder.append("comments=true&");
 		
 		if(tags)
-			builder.append("tags&");
+			builder.append("tags=true&");
 		
 		if(comment_page >=1)
 			builder.append("page=" + comment_page + "&");

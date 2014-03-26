@@ -10,13 +10,13 @@ Currently, all request returns are returned in JSONObject format. I will, howeve
 To use it
 ==================
 (1) Get access token first by using (If you need to access authentication required features)
-<b>XAuth500pxTask task = new XAuth500pxTask()
+<p>XAuth500pxTask task = new XAuth500pxTask()
 
 (2) After access token is obtained, create a PxApi instance like below
-<b>PxApi api = new PxApi(token, consumerKey, consumerSecret);
+<p>PxApi api = new PxApi(token, consumerKey, consumerSecret);
 
 (3) Then to access specific function in specific end node, get a node interface first. For exmaple, to get photo end node interface
-<b>photoInterface photo = api.getPhotoInterface();
+<p>photoInterface photo = api.getPhotoInterface();
 
 (4) To access specific function, for example, in photo end node.
-<b>JSONObject ret = photo.get_photo_id(.......);
+<p>JSONObject ret = photo.get_photo_id(.......);

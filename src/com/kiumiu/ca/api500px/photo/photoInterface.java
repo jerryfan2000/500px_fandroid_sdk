@@ -322,7 +322,7 @@ public class photoInterface {
 		
 		if(token != null) {
 			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("id", id));
+			//params.add(new BasicNameValuePair("id", id));
 			return new RESTTransport(token, consumerKey, consumerSecret).post(url + "/" + request, params);
 		}
 		return null;
@@ -348,8 +348,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px POST_photos_id_tags.
-	 * @param id ID of the photo to report.
+	 * 500px POST_photos_id_tags. Adds tags to the photo. Accepts one or multiple coma separated tags.
+	 * @param id ID of the photo to add tags.
 	 * @param tags (required) Ñ Coma separated tags.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_tags.md">500px API</a> for details.
 	 */
@@ -364,7 +364,7 @@ public class photoInterface {
 					body = body + tags[x];
 				else
 					body = body + tags[x] + ",";
-			params.add(new BasicNameValuePair("body", body));
+			params.add(new BasicNameValuePair("tags", body));
 			Log.d("fandroid", "delete tags");
 			Log.d("fandroid", "body: " + body);
 			return new RESTTransport(token, consumerKey, consumerSecret).post(url + "/" + request, params);
@@ -376,7 +376,7 @@ public class photoInterface {
 	 * 500px POST_photos_id_comments. Creates a new comment for the photo.
 	 * @param id (required) Ñ The Photo ID to post comments for.
 	 * @param comments (required) Ñ Content of the comment.
-	 * @return
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_comments.md">500px API</a> for details.
 	 */
 	public JSONObject post_photos_id_comments(String id, String comments) {
 		String request = id + "/comments";
@@ -391,6 +391,12 @@ public class photoInterface {
 		return null;
 	}
 	
+	/**
+	 * 500px POST_photos_id_vote. Vote on a particular photo.
+	 * @param id (required) Ñ ID of the photo the vote is cast upon.
+	 * @param like (required) Ñ vote, values: '0' for 'dislike' or '1' for 'like'.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_vote.md">500px API</a> for details.
+	 */
 	public JSONObject post_photos_id_vote(String id, boolean like) {
 		String request = id + "/vote?";
 		if(like)
@@ -416,10 +422,17 @@ public class photoInterface {
 	
 	/**
 	 * A placeholder for put photo future implementation
-	 * @param id
-	 * @return
+	 * @param query an array list of update query obtained from {@link photoUpdateParams} with photoUpdateParams.toNameValuePair.
+	 * @param id (required) Ñ The Photo ID to update.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/PUT_photos_id.md">500px API</a> for details.
 	 */
-	public JSONObject put_photos_id(String id) {
+	public JSONObject put_photos_id(String id, ArrayList<NameValuePair> query) {
+		String request = id;
+		
+		if(token != null) {
+			Log.d("fandroid", "update photo");
+			return new RESTTransport(token, consumerKey, consumerSecret).put(url + "/" + request + "?", query);
+		}
 		return null;
 	}
 	

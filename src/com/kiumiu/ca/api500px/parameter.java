@@ -1,10 +1,10 @@
 package com.kiumiu.ca.api500px;
 
 /**
- * @author Jerry Fan
  * Class representing request parameter in (String key, String value) format.
+ * @author Jerry Fan
  */
-public class parameter {
+public class Parameter {
 	String key;
 	String value;
 	
@@ -12,7 +12,7 @@ public class parameter {
 	 * @param k Key in String.
 	 * @param v Value in String.
 	 */
-	public parameter(String k, String v) {
+	public Parameter(String k, String v) {
 		key = k;
 		value = v;
 	}

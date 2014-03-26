@@ -17,6 +17,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
@@ -25,8 +26,8 @@ import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.photo.photoInterface;
 
 /**
- * @author Jerry Fan
  * Utility class for handling REST Http command
+ * @author Jerry Fan
  */
 public class RESTTransport {
 	private static final String TAG = "RESTTransport";
@@ -67,6 +68,16 @@ public class RESTTransport {
             request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, "Parameters in post are invalid", e);
+        }
+        return handleSigned(request);
+    }
+    
+    public JSONObject put(String url, List<? extends NameValuePair> params) {
+    	HttpPut request = new HttpPut(HOST + url);
+        try {
+            request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "Parameters in put are invalid", e);
         }
         return handleSigned(request);
     }

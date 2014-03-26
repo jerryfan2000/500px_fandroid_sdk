@@ -109,22 +109,70 @@ public class photoInterface {
 	
 	/**
 	 * 500px GET_photos. This version lets developer to build URL request string with valid consumer key or access token.
-	 * @param feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link features}'.
-	 * @param items additional {@link parameter} for GET_photos request. Follow <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px github</a> for more details.
-	 * @return JSON response
+	 * @param (required) feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link Features}'.
+	 * @param only String array of names of the category to return photos from. Must be one of the constant in {@link Category}.
+	 * @param exclude String name of the category to exclude photos by. Must be one of the constant in {@link Category}.
+	 * @param sort Sort photos in the specified order. Must be one of the constant in {@link Sort}.
+	 * @param sort_direction  Control the order of the sorting. You can provide a sort_direction without providing a sort, in which case the default sort for the requested feature will be adjusted. Must be one of the constant in {@link SortDirection}. 
+	 * @param page Return a specific page in the photo stream. Page numbering is 1-based.
+	 * @param rpp The number of results to return. Can not be over 100, default 20.
+	 * @param image_size The photo size to be returned. It has to be an integer: 1 to 4.
+	 * @param include_store True to returns market information about the photo.
+	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
+	 * @param tags True to returns an array of tags for the photo.
+	 * @return
 	 */
-	public JSONObject get_photos(String feature, ArrayList<Parameter> items) {
+	public JSONObject get_photos(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
+			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {
 		//Build request parameters here
-		String request = "?features=" + feature;
+		String request = "?features=" + feature + "&";
 		StringBuilder builder = new StringBuilder(request);
 		
-		for(int x=0; x<items.size(); x++) {
-			builder.append("&");
-			builder.append(items.get(x).getKey() + "=" + items.get(x).getValue());
+		if(only != null) {
+			builder.append("only=");
+			for(int x=0; x<only.length; x++)
+				if(x == only.length-1)
+					builder.append(only[x] + "&");
+				else
+					builder.append(only[x] + ",");
+			
+			if(exclude != null) {
+				builder.append("exclude=");
+				for(int x=0; x<exclude.length; x++)
+					if(x == exclude.length-1)
+						builder.append(exclude[x] + "&");
+					else
+						builder.append(exclude[x] + ",");
+			}
+			
+			if(sort != null)
+				builder.append("sort=" + sort + "&");
+			
+			if(sort_direction != null)
+				builder.append("sort_direction=" + sort_direction + "&");
+			
+			if(page > 0)
+				builder.append("page=" + page + "&");
+			
+			if(rpp > 0)
+				builder.append("rpp=" + rpp + "&");
+			
+			if(image_size >= 1 && image_size <= 4)
+				builder.append("image_size=" + image_size + "&");
+			
+			if(include_store)
+				builder.append("include_store=1&");
+			
+			if(include_states)
+				builder.append("include_states=1&");
+			
+			if(tags)
+				builder.append("tags=1");
 		}
-		
+			
+		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)
-			return  new RESTTransport(consumerKey).get(url + "/" + request);
+			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
 	}

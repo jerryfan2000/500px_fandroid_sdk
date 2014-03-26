@@ -222,14 +222,14 @@ public class photoInterface {
 		StringBuilder builder = new StringBuilder(request);
 		
 		if(nested)
-			builder.append("nested&");
+			builder.append("nested=1&");
 		
 		if(page >= 1)
 			builder.append("page=" + page + "&");
 		else
 			builder.append("page=1&");
 		Log.d("fandroid", url + "/" + builder.toString());
-		return  new RESTTransport(consumerKey).get(url + "/" + request);
+		return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 	}
 	
 	/**

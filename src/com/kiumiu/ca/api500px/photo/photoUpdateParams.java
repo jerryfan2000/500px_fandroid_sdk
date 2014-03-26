@@ -6,6 +6,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 
+/**
+ * REST call parameters for {@link photoInterface.put_photos_id} call.
+ * @author jerry
+ *
+ */
 public class photoUpdateParams {
 	String name;
 	String description;

@@ -2,4 +2,5 @@ com.fivehundredpx.api
 com.fivehundredpx.api.auth
 com.fivehundredpx.api.tasks
 com.kiumiu.ca.api500px
+com.kiumiu.ca.api500px.comments
 com.kiumiu.ca.api500px.photo

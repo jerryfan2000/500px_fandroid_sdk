@@ -11,6 +11,13 @@ import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
 
+/**
+ * A class which wraps all 500px REST comments end node functions 
+ * @see See <a href="https://github.com/500px/api-documentation/tree/master/endpoints/comment">500px gitGub</a> for more detail
+ * 
+ * @author Jerry Fan
+ *
+ */
 public class commentInterface {
 	private AccessToken token;
 	private String consumerKey;

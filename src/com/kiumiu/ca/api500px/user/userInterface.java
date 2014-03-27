@@ -1,5 +1,9 @@
 package com.kiumiu.ca.api500px.user;
 
+import java.util.ArrayList;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -154,5 +158,20 @@ public class userInterface {
 		else
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?email=" + email);
 		
+	}
+	
+	/**
+	 * 500px POST_users_id_friends. To follow someone.
+	 * @param id (required) id of someone to follow.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/POST_users_id_friends.md">500px API</a> for details.
+	 */
+	public JSONObject post_users_id_friends(String id) {
+		String request = id + "/friends";
+		
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		if(token != null)
+			return new RESTTransport(token, consumerKey, consumerSecret).post(url + "/" + request, params);
+		else
+			return new RESTTransport(consumerKey).post(url + "/" + request, params);
 	}
 }

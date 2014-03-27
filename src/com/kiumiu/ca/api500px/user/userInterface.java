@@ -63,6 +63,24 @@ public class userInterface {
 		return new RESTTransport(token, consumerKey, consumerSecret).get(url);
 	}
 	
+	public JSONObject get_users_id_followers(String id, int page, int rpp) {
+		String request = id + "/followers?";
+		
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token == null)
+			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
+		else
+			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+	}
+	
 	/**
 	 * 500px GET_users_id_friends. Returns a list of friends for the specified user.
 	 * @param id (required) Ñ Return information for the specified user ID

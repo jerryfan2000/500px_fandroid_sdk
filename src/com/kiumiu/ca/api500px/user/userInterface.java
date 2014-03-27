@@ -104,4 +104,16 @@ public class userInterface {
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
 	}
+	
+	/**
+	 * 500px GET_users_search. Return listing of ten (up to one hundred) users from search results for a specified search term.
+	 * @param search (required) Ñ A keyword to search for.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_search.md">500px API</a> for details.
+	 */
+	public JSONObject get_users_search(String search) {
+		if(token == null)
+			return new RESTTransport(consumerKey).get(url + "/search?term=" + search);	
+		else
+			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/search?term=" + search);	
+	}
 }

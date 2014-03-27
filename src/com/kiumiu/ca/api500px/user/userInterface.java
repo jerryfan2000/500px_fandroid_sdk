@@ -116,4 +116,43 @@ public class userInterface {
 		else
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/search?term=" + search);	
 	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by userid (don't be confused this with username where userid is a number).
+	 * @param id (required) user to return from with specific user id.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details.
+	 */
+	public JSONObject get_users_show_by_id(String id) {	
+		if(token == null)
+			return new RESTTransport(consumerKey).get(url + "/show?id=" + id);	
+		else
+			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?id=" + id);
+		
+	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by username.
+	 * @param username (required) user to return from with specific username.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details.
+	 */
+	public JSONObject get_users_show_by_username(String username) {	
+		if(token == null)
+			return new RESTTransport(consumerKey).get(url + "/show?id=" + username);	
+		else
+			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?username=" + username);
+		
+	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by email.
+	 * @param email (required) user to return from with specific email.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details.
+	 */
+	public JSONObject get_users_show_by_email(String email) {	
+		if(token == null)
+			return new RESTTransport(consumerKey).get(url + "/show?email=" + email);	
+		else
+			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?id=" + email);
+		
+	}
 }

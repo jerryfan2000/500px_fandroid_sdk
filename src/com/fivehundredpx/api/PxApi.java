@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.blog.blogInterface;
 import com.kiumiu.ca.api500px.comments.commentInterface;
 import com.kiumiu.ca.api500px.photo.photoInterface;
+import com.kiumiu.ca.api500px.user.userInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -96,18 +98,40 @@ public class PxApi {
     	if(accessToken != null)
     		return new photoInterface(accessToken, consumerKey, consumerKey);
     	else
-    		return new photoInterface(consumerKey, consumerKey);
+    		return new photoInterface(consumerKey, consumerSecret);
     }
     
     /**
-     * Get an instance of photoInterface object
-     * @return An instance of photoInterface. Return null if PxApi is not initialized with valid access token.
+     * Get an instance of commentInterface object
+     * @return An instance of commentInterface. Return null if PxApi is not initialized with valid access token.
      */
     public commentInterface getCommentInterface() {
     	if(accessToken != null)
-    		return new commentInterface(accessToken, consumerKey, consumerKey);
+    		return new commentInterface(accessToken, consumerKey, consumerSecret);
     	else
     		return null;
+    }
+    
+    /**
+     * Get an instance of blogInterface object
+     * @return An instance of blogInterface.
+     */
+    public blogInterface getBlogInterface() {
+    	if(accessToken != null)
+    		return new blogInterface(accessToken, consumerKey, consumerSecret);
+    	else
+    		return new blogInterface(consumerKey, consumerSecret);
+    }
+    
+    /**
+     * Get an instance of userInterface object
+     * @return An instance of userInterface.
+     */
+    public userInterface getUserInterface() {
+    	if(accessToken != null)
+    		return new userInterface(accessToken, consumerKey, consumerSecret);
+    	else
+    		return new userInterface(consumerKey, consumerSecret);
     }
 
 }

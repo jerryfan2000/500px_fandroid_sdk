@@ -214,5 +214,24 @@ public class blogInterface {
 		}
 		return null;
 	}
+	
+	/**
+	 * 500px POST_blogs_id_comments. Creates a comment for the Story.
+	 * @param id (required) Ñ The Story ID to create a comment for.
+	 * @param comment (required) Ñ Content of the comment.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/POST_blogs_id_comments.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public JSONObject post_blogs_id_comments(String id, String comment) {
+		String request = id + "/comments";
+		
+		if(token != null) {
+			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("body", comment));
+			return new RESTTransport(token, consumerKey, consumerSecret).post(url + "/" + request, params);
+		}
+		return null;
+		
+	}
 
 }

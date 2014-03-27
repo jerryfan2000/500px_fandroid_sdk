@@ -233,5 +233,59 @@ public class blogInterface {
 		return null;
 		
 	}
+	
+	/**
+	 * 500px put_blogs_id. Updates the Story.
+	 * @param id (required) Ñ The Blog Post ID to update.
+	 * @param title Title for the blog post.
+	 * @param body Content of the blog post.
+	 * @param latitude Latitude for the blog post.
+	 * @param longitude Longitude for the blog post.
+	 * @param tags Comma separated list of tags.
+	 * @param photoids Comma separated list of Photo IDs for photos that are in the blog post.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/PUT_blogs_id.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public JSONObject put_blogs_id(String id, String title, String body, String latitude, String longitude, String[] tags, String[] photoids) {
+		String request = "/" + id;
+		
+		if(token != null) {
+			String mTags = "", mPhotoids = "";
+			
+			for(int x=0; x<tags.length; x++)
+				if(x==tags.length-1)
+					mTags = mTags + tags[x];
+				else
+					mTags = mTags + tags[x] + ",";
+			
+			for(int x=0; x<photoids.length; x++)
+				if(x==photoids.length-1)
+					mPhotoids = mPhotoids + photoids[x];
+				else
+					mPhotoids = mPhotoids + photoids[x] + ",";
+			
+			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+			if(title != null)
+				params.add(new BasicNameValuePair("title", title));
+			
+			if(body != null)
+				params.add(new BasicNameValuePair("body", body));
+			
+			if(latitude != null)
+				params.add(new BasicNameValuePair("latitude", latitude));
+			
+			if(longitude != null)
+				params.add(new BasicNameValuePair("longitude", longitude));
+			
+			if(tags != null)
+				params.add(new BasicNameValuePair("tags", mTags));
+			
+			if(photoids != null)
+				params.add(new BasicNameValuePair("photo_ids", mPhotoids));
+			
+			return new RESTTransport(token, consumerKey, consumerSecret).put(url + request, params);
+		}
+		return null;
+	}
 
 }

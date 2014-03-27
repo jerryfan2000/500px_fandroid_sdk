@@ -127,5 +127,19 @@ public class blogInterface {
 		Log.d("fandroid", url + "/" + builder.toString());
 		return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 	}
+	
+	/**
+	 * 500px GET_blogs_id. Returns detailed information of a single story.
+	 * @param id (required) - Return information for the specific story.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs_id.md">500px API</a> for details.
+	 */
+	public JSONObject get_blogs_id(String id) {
+		String request = id;
+		
+		if(token == null)
+			return  new RESTTransport(consumerKey).get(url + "/" + request);
+		else
+			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
+	}
 
 }

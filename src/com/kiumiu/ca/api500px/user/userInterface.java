@@ -137,7 +137,7 @@ public class userInterface {
 	 */
 	public JSONObject get_users_show_by_username(String username) {	
 		if(token == null)
-			return new RESTTransport(consumerKey).get(url + "/show?id=" + username);	
+			return new RESTTransport(consumerKey).get(url + "/show?username=" + username);	
 		else
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?username=" + username);
 		
@@ -152,7 +152,7 @@ public class userInterface {
 		if(token == null)
 			return new RESTTransport(consumerKey).get(url + "/show?email=" + email);	
 		else
-			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?id=" + email);
+			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?email=" + email);
 		
 	}
 }

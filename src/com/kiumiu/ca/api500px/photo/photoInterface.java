@@ -205,7 +205,7 @@ public class photoInterface {
 			builder.append("image_size=1&");
 		
 		if(token == null)
-			return  new RESTTransport(consumerKey).get(url + "/" + request);
+			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
 	}

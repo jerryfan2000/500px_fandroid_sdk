@@ -55,6 +55,15 @@ public class userInterface {
 	}
 	
 	/**
+	 * 500px GET_users. Returns the profile information for the current user.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users.mdd">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public JSONObject get_users() {
+		return new RESTTransport(token, consumerKey, consumerSecret).get(url);
+	}
+	
+	/**
 	 * 500px GET_users_id_friends. Returns a list of friends for the specified user.
 	 * @param id (required) Ñ Return information for the specified user ID
 	 * @param page Return the specified page of the resource. Page numbering is 1-based.

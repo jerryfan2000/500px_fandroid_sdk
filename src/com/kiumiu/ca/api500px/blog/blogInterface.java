@@ -1,7 +1,10 @@
 package com.kiumiu.ca.api500px.blog;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -158,6 +161,58 @@ public class blogInterface {
 			return  new RESTTransport(consumerKey).get(url + "/" + request);
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
+	}
+	
+	/**
+	 * 500px POST_blogs. Creates a new Story.
+	 * @param title (required) Ñ Title for the blog post.
+	 * @param body (required) Ñ Content of the blog post.
+	 * @param latitude Latitude for the blog post.
+	 * @param longitude Longitude for the blog post.
+	 * @param tags Comma separated list of tags.
+	 * @param photoids Comma separated list of Photo ID values to post with the blog.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/POST_blogs.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public JSONObject post_blogs(String title, String body, String latitude, String longitude, String[] tags, String[] photoids) {
+		
+		if(token != null) {
+			String mTags = "", mPhotoids = "";
+			
+			for(int x=0; x<tags.length; x++)
+				if(x==tags.length-1)
+					mTags = mTags + tags[x];
+				else
+					mTags = mTags + tags[x] + ",";
+			
+			for(int x=0; x<photoids.length; x++)
+				if(x==photoids.length-1)
+					mPhotoids = mPhotoids + photoids[x];
+				else
+					mPhotoids = mPhotoids + photoids[x] + ",";
+			
+			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+			if(title != null)
+				params.add(new BasicNameValuePair("title", title));
+			
+			if(body != null)
+				params.add(new BasicNameValuePair("body", body));
+			
+			if(latitude != null)
+				params.add(new BasicNameValuePair("latitude", latitude));
+			
+			if(longitude != null)
+				params.add(new BasicNameValuePair("longitude", longitude));
+			
+			if(tags != null)
+				params.add(new BasicNameValuePair("tags", mTags));
+			
+			if(photoids != null)
+				params.add(new BasicNameValuePair("photo_ids", mPhotoids));
+			
+			return new RESTTransport(token, consumerKey, consumerSecret).post(url, params);
+		}
+		return null;
 	}
 
 }

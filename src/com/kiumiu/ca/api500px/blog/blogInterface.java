@@ -141,5 +141,23 @@ public class blogInterface {
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
 	}
+	
+	/**
+	 * 500px GET_blogs_id_comments. Returns a listing of twenty comments for a specific Story.
+	 * @param id (required) Ñ The Story ID to get comments for.
+	 * @param page Return a specific page in the comment listing. Page numbering is 1-based.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs_id_comments.md">500px API</a> for details.
+	 */
+	public JSONObject get_blogs_id_comments(String id, int page) {
+		String request = id + "/comments?";
+		
+		if(page > 0)
+			request = request + "page=" + page;
+		
+		if(token == null)
+			return  new RESTTransport(consumerKey).get(url + "/" + request);
+		else
+			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
+	}
 
 }

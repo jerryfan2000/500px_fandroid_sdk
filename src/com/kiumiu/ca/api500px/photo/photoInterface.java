@@ -1,11 +1,18 @@
 package com.kiumiu.ca.api500px.photo;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import android.net.Uri;
 import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
@@ -462,12 +469,80 @@ public class photoInterface {
 		return null;
 	}
 	
+
 	/**
-	 * A placeholder for image upload future implementation
-	 * @return
+	 * 500px POST_photos_upload. Upload a photo to 500px. This feature is currently in beta by 500px and is subject to change. If your photo contains EXIF and IPTC tags, you can skip technical parameters.
+	 * @param imagePath (required) - Photo filename in JPG/JPEG in Uri format.
+	 * @param name Title of the photo.
+	 * @param description Description for the photo.
+	 * @param category A numerical ID for the Category of the photo as defined in {@link Category}.
+	 * @param privacy Whether to hide the photo from the user profile on the website. Otherwise, the photo is only available for use in Collections/Portfolio.
+	 * @param shutter_speed Shutter speed in seconds, represented by string containing a rational expression if the value is 1sec.
+	 * @param focal_length Focal length in millimetres, a string representing an integer value.
+	 * @param aperture Aperture value in integer format. There is no need to add f/ as prefix.
+	 * @param iso ISO value.
+	 * @param camera Make and model of the camera. Note: Please make sure it contains sensible information (eg., does not contain camera's make or model twice)
+	 * @param lens Lens used to make this photo.
+	 * @param latitude Latitude, in xxxx.xxxx format.
+	 * @param longitude Longitude, in xxx.xxxx format
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_upload.md">500px API</a> for details. 
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
-	public JSONObject post_photos_upload() {
+	public JSONObject post_photos_upload(Uri imagePath, String name, String description, int category, 
+			boolean privacy, String shutter_speed, String focal_length, String aperture, int iso, 
+			String camera, String lens, String latitude, String longitude) {
+		String request = "upload?";
+		try{
+		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+		
+		if(imagePath != null)
+			entity.addPart("file", new FileBody(new File(imagePath.getPath())));
+		
+		if(name != null)
+			entity.addPart("name", new StringBody(name));
+		
+		if(description != null)
+			entity.addPart("description", new StringBody(description));
+		
+		if(category >= 0)
+			entity.addPart("category", new StringBody("" + category));
+		
+		if(privacy)
+			entity.addPart("privacy", new StringBody("1"));
+		
+		if(shutter_speed != null)
+			entity.addPart("shutter_speed", new StringBody(shutter_speed));
+		
+		if(focal_length != null)
+			entity.addPart("focal_length", new StringBody(focal_length));
+		
+		if(aperture != null)
+			entity.addPart("aperture", new StringBody(aperture));
+		
+		if(iso > 0)
+			entity.addPart("iso", new StringBody("" + iso));
+		
+		if(camera != null)
+			entity.addPart("camera", new StringBody(camera));
+		
+		if(lens != null)
+			entity.addPart("lens", new StringBody(lens));
+		
+		if(latitude != null)
+			entity.addPart("latitude", new StringBody(latitude));
+		
+		if(longitude != null)
+			entity.addPart("longitude", new StringBody(longitude));
+			
+		if(token != null) {
+			return new RESTTransport(token, consumerKey, consumerSecret).postMultiPart(url + "/" + request, entity);
+		}
 		return null;
+		
+		} catch(Exception e) { e.printStackTrace(); }
+		
+		return null;
+
 	}
 	
 	/**

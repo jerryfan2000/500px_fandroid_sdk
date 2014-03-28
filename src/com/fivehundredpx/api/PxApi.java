@@ -5,6 +5,7 @@ import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.blog.blogInterface;
+import com.kiumiu.ca.api500px.collections.collectionsInterface;
 import com.kiumiu.ca.api500px.comments.commentInterface;
 import com.kiumiu.ca.api500px.photo.photoInterface;
 import com.kiumiu.ca.api500px.user.userInterface;
@@ -132,6 +133,17 @@ public class PxApi {
     		return new userInterface(accessToken, consumerKey, consumerSecret);
     	else
     		return new userInterface(consumerKey, consumerSecret);
+    }
+    
+    /**
+     * Get an instance of collectionsInterface object
+     * @return An instance of collectionsInterface.
+     */
+    public collectionsInterface getCollectionsInterface() {
+    	if(accessToken != null)
+    		return new collectionsInterface(accessToken, consumerKey, consumerSecret);
+    	else
+    		return new collectionsInterface(consumerKey, consumerSecret);
     }
 
 }

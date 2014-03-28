@@ -1,4 +1,4 @@
-package com.kiumiu.ca.api500px.responseData;
+package com.kiumiu.ca.api500px.primitiveDataType;
 
 import java.util.HashMap;
 

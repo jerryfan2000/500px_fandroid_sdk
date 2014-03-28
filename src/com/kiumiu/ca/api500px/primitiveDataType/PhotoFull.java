@@ -1,11 +1,13 @@
-package com.kiumiu.ca.api500px.responseData;
+package com.kiumiu.ca.api500px.primitiveDataType;
+
+import java.util.ArrayList;
 
 /**
  * Photo object in short format. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.
  * @author Jerry Fan
  *
  */
-public class PhotoShort {
+public class PhotoFull {
 	//data objects
 	public String id;
 	public String name;
@@ -41,7 +43,17 @@ public class PhotoShort {
 	public boolean converted;
 	public String[] images;
 	public UserShort user;
+	public Comment[] comments;
+	public boolean store_download;
+	public boolean store_print;
+	public boolean editors_choice;
+	public String feature;
 	public int collections_count;
+	
+	//Per user based data
+	public boolean voted;
+	public boolean favorited;
+	public boolean purchased;
 	
 	/**
 	 * @return the id
@@ -172,7 +184,7 @@ public class PhotoShort {
 	/**
 	 * @param rating the rating to set
 	 */
-	public void setRating(float rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 	/**
@@ -436,7 +448,7 @@ public class PhotoShort {
 	/**
 	 * @param image_size the image_size to set
 	 */
-	public void setImages(String[] images) {
+	public void setImage_size(String[] images) {
 		this.images = images;
 	}
 	/**
@@ -462,6 +474,102 @@ public class PhotoShort {
 	 */
 	public void setCollections_count(int collections_count) {
 		this.collections_count = collections_count;
+	}
+	/**
+	 * @return the comments
+	 */
+	public Comment[] getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(Comment[] comments) {
+		this.comments = comments;
+	}
+	/**
+	 * @return the store_download
+	 */
+	public boolean isStore_download() {
+		return store_download;
+	}
+	/**
+	 * @param store_download the store_download to set
+	 */
+	public void setStore_download(boolean store_download) {
+		this.store_download = store_download;
+	}
+	/**
+	 * @return the store_print
+	 */
+	public boolean isStore_print() {
+		return store_print;
+	}
+	/**
+	 * @param store_print the store_print to set
+	 */
+	public void setStore_print(boolean store_print) {
+		this.store_print = store_print;
+	}
+	/**
+	 * @return the editors_choice
+	 */
+	public boolean isEditors_choice() {
+		return editors_choice;
+	}
+	/**
+	 * @param editors_choice the editors_choice to set
+	 */
+	public void setEditors_choice(boolean editors_choice) {
+		this.editors_choice = editors_choice;
+	}
+	/**
+	 * @return the feature
+	 */
+	public String getFeature() {
+		return feature;
+	}
+	/**
+	 * @param feature the feature to set
+	 */
+	public void setFeature(String feature) {
+		this.feature = feature;
+	}
+	/**
+	 * @return the voted
+	 */
+	public boolean isVoted() {
+		return voted;
+	}
+	/**
+	 * @param voted the voted to set
+	 */
+	public void setVoted(boolean voted) {
+		this.voted = voted;
+	}
+	/**
+	 * @return the favorited
+	 */
+	public boolean isFavorited() {
+		return favorited;
+	}
+	/**
+	 * @param favorited the favorited to set
+	 */
+	public void setFavorited(boolean favorited) {
+		this.favorited = favorited;
+	}
+	/**
+	 * @return the purchased
+	 */
+	public boolean isPurchased() {
+		return purchased;
+	}
+	/**
+	 * @param purchased the purchased to set
+	 */
+	public void setPurchased(boolean purchased) {
+		this.purchased = purchased;
 	}
 	
 }

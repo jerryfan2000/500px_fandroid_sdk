@@ -1,4 +1,4 @@
-package com.kiumiu.ca.api500px.responseData;
+package com.kiumiu.ca.api500px.primitiveDataType;
 
 /**
  * Comment objects. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.

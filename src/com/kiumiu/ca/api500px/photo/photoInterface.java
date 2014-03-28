@@ -56,7 +56,7 @@ public class photoInterface {
 	/**
 	 * 500px DELETE_photos_id function call. Used to delete an photo by photo ID
 	 * @param id Photo with ID to be deleted.
-	 * @return JSON response
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/DELETE_photos_id.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject delete_photo_id(String id) {
@@ -66,7 +66,7 @@ public class photoInterface {
 	/**
 	 * 500px DELETE_photos_id_favorite. Used to remove the photo to user's list of favorites.
 	 * @param id Photo with ID to be deleted.
-	 * @return JSON response
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/DELETE_photos_id_favorite.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject delete_photo_id_faviorte(String id) {
@@ -77,7 +77,7 @@ public class photoInterface {
 	 * 500px DELETE_photos_id_tags. Used to remove tags from the photo. Accepts one or multiple coma separated tags.
 	 * @param id Photo with ID to be deleted.
 	 * @param tags String array of tags to be deleted.
-	 * @return JSON response
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/DELETE_photos_id_tags.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject delete_photo_id_tags(String id, String[] tags) {
@@ -100,10 +100,10 @@ public class photoInterface {
 	/**
 	 * 500px GET_photos. This version lets developer to manually build URL request string with valid consumer key or access token.
 	 * @param request request URL for requesting photos from manually built request URL.
-	 * @return JSON response
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Request String *Must* starts from ? excluding /photos, for example '?features=popular&only=Animals'.
 	 */
-	public JSONObject get_photo(String request) {
+	public JSONObject get_photos(String request) {
 		if(token == null)
 			return  new RESTTransport(consumerKey).get(url + "/" + request);
 		else
@@ -123,7 +123,7 @@ public class photoInterface {
 	 * @param include_store True to returns market information about the photo.
 	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
 	 * @param tags True to returns an array of tags for the photo.
-	 * @return
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
 	 */
 	public JSONObject get_photos(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
 			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {

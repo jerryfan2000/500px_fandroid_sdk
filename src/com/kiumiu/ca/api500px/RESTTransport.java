@@ -19,6 +19,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 import android.util.Log;
@@ -69,6 +70,12 @@ public class RESTTransport {
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, "Parameters in post are invalid", e);
         }
+        return handleSigned(request);
+    }
+    
+    public JSONObject postMultiPart(String url, MultipartEntity params) {
+        HttpPost request = new HttpPost(HOST + url);
+        request.setEntity(params);
         return handleSigned(request);
     }
     

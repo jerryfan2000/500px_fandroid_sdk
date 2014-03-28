@@ -138,7 +138,7 @@ public class collectionsInterface {
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/POST_collections.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
-	public JSONObject put_collections_id(String id, String path, boolean isProfileSet, String[] photo_ids) {
+	public JSONObject put_collections_id(String id, String path, boolean isProfileSet, String[] photo_ids, int position) {
 		if(token != null) {
 			String pIds = "";
 			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -160,6 +160,9 @@ public class collectionsInterface {
 				}
 				params.add(new BasicNameValuePair("photo_ids", pIds));
 			}
+			
+			if(position >= 0)
+				params.add(new BasicNameValuePair("position", "" + position));
 			
 			return new RESTTransport(token, consumerKey, consumerSecret).put(url + "/" + id, params);
 		}

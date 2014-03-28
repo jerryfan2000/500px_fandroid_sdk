@@ -6,7 +6,7 @@ package com.kiumiu.ca.api500px.primitiveDataType;
  *
  */
 public class UserShort {
-	public String id;
+	public int id;
 	public String username;
 	public String firstname;
 	public String lastname;
@@ -21,13 +21,13 @@ public class UserShort {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**

@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class UserFullProfile {
 	//UserShort
-	public String id;
+	public int id;
 	public String username;
 	public String firstname;
 	public String lastname;
@@ -31,7 +31,7 @@ public class UserFullProfile {
 	public boolean show_nude;
 	public boolean store_on;
 	public HashMap<String,String> contacts;
-	public HashMap<String,String> equipment;
+	public HashMap<String,String[]> equipment;
 	public int photos_count;
 	public int in_favorites_count;
 	public int friends_count;
@@ -51,13 +51,13 @@ public class UserFullProfile {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**
@@ -293,13 +293,13 @@ public class UserFullProfile {
 	/**
 	 * @return the equipment
 	 */
-	public HashMap<String, String> getEquipment() {
+	public HashMap<String, String[]> getEquipment() {
 		return equipment;
 	}
 	/**
 	 * @param equipment the equipment to set
 	 */
-	public void setEquipment(HashMap<String, String> equipment) {
+	public void setEquipment(HashMap<String, String[]> equipment) {
 		this.equipment = equipment;
 	}
 	/**

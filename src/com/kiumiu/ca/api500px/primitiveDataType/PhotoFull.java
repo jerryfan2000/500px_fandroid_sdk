@@ -1,6 +1,7 @@
 package com.kiumiu.ca.api500px.primitiveDataType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Photo object in short format. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.
@@ -9,13 +10,13 @@ import java.util.ArrayList;
  */
 public class PhotoFull {
 	//data objects
-	public String id;
+	public int id;
 	public String name;
 	public String description;
 	public String camera;
 	public String lens;
 	public String focal_length;
-	public int iso;
+	public String iso;
 	public String shutter_speed;
 	public String aperture;
 	public int times_viewed;
@@ -40,8 +41,8 @@ public class PhotoFull {
 	public double highest_rating;
 	public String highest_rating_date;
 	public int license_type;
-	public boolean converted;
-	public String[] images;
+	public int converted;
+	public HashMap<String,String>[] images;
 	public UserShort user;
 	public Comment[] comments;
 	public boolean store_download;
@@ -58,13 +59,13 @@ public class PhotoFull {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**
@@ -130,13 +131,13 @@ public class PhotoFull {
 	/**
 	 * @return the iso
 	 */
-	public int getIso() {
+	public String getIso() {
 		return iso;
 	}
 	/**
 	 * @param iso the iso to set
 	 */
-	public void setIso(int iso) {
+	public void setIso(String iso) {
 		this.iso = iso;
 	}
 	/**
@@ -430,25 +431,25 @@ public class PhotoFull {
 	/**
 	 * @return the converted
 	 */
-	public boolean isConverted() {
+	public int isConverted() {
 		return converted;
 	}
 	/**
 	 * @param converted the converted to set
 	 */
-	public void setConverted(boolean converted) {
+	public void setConverted(int converted) {
 		this.converted = converted;
 	}
 	/**
 	 * @return the image_size
 	 */
-	public String[] getImages() {
+	public HashMap<String,String>[] getImages() {
 		return images;
 	}
 	/**
 	 * @param image_size the image_size to set
 	 */
-	public void setImage_size(String[] images) {
+	public void setImage_size(HashMap<String,String>[] images) {
 		this.images = images;
 	}
 	/**
@@ -570,6 +571,18 @@ public class PhotoFull {
 	 */
 	public void setPurchased(boolean purchased) {
 		this.purchased = purchased;
+	}
+	/**
+	 * @param highest_rating the highest_rating to set
+	 */
+	public void setHighest_rating(double highest_rating) {
+		this.highest_rating = highest_rating;
+	}
+	/**
+	 * @param images the images to set
+	 */
+	public void setImages(HashMap<String,String>[] images) {
+		this.images = images;
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.kiumiu.ca.api500px.primitiveDataType;
 
+import java.util.HashMap;
+
 /**
  * Photo object in short format. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.
  * @author Jerry Fan
@@ -7,7 +9,7 @@ package com.kiumiu.ca.api500px.primitiveDataType;
  */
 public class PhotoShort {
 	//data objects
-	public String id;
+	public int id;
 	public String name;
 	public String description;
 	public String camera;
@@ -38,21 +40,27 @@ public class PhotoShort {
 	public double highest_rating;
 	public String highest_rating_date;
 	public int license_type;
-	public boolean converted;
-	public String[] images;
+	public int converted;
+	public String image_url;
+	public HashMap<String,String>[] images;
 	public UserShort user;
 	public int collections_count;
+	
+	//per user data
+	public boolean liked;
+	public boolean favorited;
+	public boolean purchased;
 	
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**
@@ -418,25 +426,25 @@ public class PhotoShort {
 	/**
 	 * @return the converted
 	 */
-	public boolean isConverted() {
+	public int isConverted() {
 		return converted;
 	}
 	/**
 	 * @param converted the converted to set
 	 */
-	public void setConverted(boolean converted) {
+	public void setConverted(int converted) {
 		this.converted = converted;
 	}
 	/**
 	 * @return the image_size
 	 */
-	public String[] getImages() {
+	public HashMap<String,String>[] getImages() {
 		return images;
 	}
 	/**
 	 * @param image_size the image_size to set
 	 */
-	public void setImages(String[] images) {
+	public void setImages(HashMap<String,String>[] images) {
 		this.images = images;
 	}
 	/**
@@ -462,6 +470,66 @@ public class PhotoShort {
 	 */
 	public void setCollections_count(int collections_count) {
 		this.collections_count = collections_count;
+	}
+	/**
+	 * @return the image_url
+	 */
+	public String getImage_url() {
+		return image_url;
+	}
+	/**
+	 * @param image_url the image_url to set
+	 */
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	/**
+	 * @param highest_rating the highest_rating to set
+	 */
+	public void setHighest_rating(double highest_rating) {
+		this.highest_rating = highest_rating;
+	}
+	/**
+	 * @return the liked
+	 */
+	public boolean isLiked() {
+		return liked;
+	}
+	/**
+	 * @param liked the liked to set
+	 */
+	public void setLiked(boolean liked) {
+		this.liked = liked;
+	}
+	/**
+	 * @return the favorited
+	 */
+	public boolean isFavorited() {
+		return favorited;
+	}
+	/**
+	 * @param favorited the favorited to set
+	 */
+	public void setFavorited(boolean favorited) {
+		this.favorited = favorited;
+	}
+	/**
+	 * @return the purchased
+	 */
+	public boolean isPurchased() {
+		return purchased;
+	}
+	/**
+	 * @param purchased the purchased to set
+	 */
+	public void setPurchased(boolean purchased) {
+		this.purchased = purchased;
 	}
 	
 }

@@ -6,20 +6,20 @@ package com.kiumiu.ca.api500px.primitiveDataType;
  *
  */
 public class BlogShort {
-	public String id;
+	public int id;
 	public String title;
 	public String created_at;
 	public UserShort user;
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**

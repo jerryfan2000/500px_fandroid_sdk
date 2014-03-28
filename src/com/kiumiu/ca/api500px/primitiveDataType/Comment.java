@@ -6,7 +6,7 @@ package com.kiumiu.ca.api500px.primitiveDataType;
  *
  */
 public class Comment {
-	public String id;
+	public int id;
 	public String body;
 	public String to_whom_user_id;
 	public String user_id;
@@ -22,14 +22,14 @@ public class Comment {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

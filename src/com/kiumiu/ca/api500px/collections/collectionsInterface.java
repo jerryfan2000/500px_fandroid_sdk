@@ -127,20 +127,17 @@ public class collectionsInterface {
 	
 	/**
 	 * 500px PUT_collections. Update a collection.
-	 * @param title (required) Ñ Title for the collection.
+	 * @param id (required) Ñ Collection to update with specific ID.
 	 * @param path (required) Ñ Path where the collection will be accessible at 500px.com/user/sets/:path.
 	 * @param isProfileSet  Kind of the Collection to be created Recognized values: false - Portfolio Set, true - Profile Set.
 	 * @param photo_ids String array of photo_ids to add into this collection.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/POST_collections.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
-	public JSONObject put_collections_id(String title, String path, boolean isProfileSet, String[] photo_ids) {
+	public JSONObject put_collections_id(String id, String path, boolean isProfileSet, String[] photo_ids) {
 		if(token != null) {
 			String pIds = "";
 			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-			
-			if(title != null)
-				params.add(new BasicNameValuePair("title", title));
 			
 			if(path != null)
 				params.add(new BasicNameValuePair("path", path));
@@ -160,7 +157,7 @@ public class collectionsInterface {
 				params.add(new BasicNameValuePair("photo_ids", pIds));
 			}
 			
-			return new RESTTransport(token, consumerKey, consumerSecret).put(url, params);
+			return new RESTTransport(token, consumerKey, consumerSecret).put(url + "/" + id, params);
 		}
 		return null;
 	}

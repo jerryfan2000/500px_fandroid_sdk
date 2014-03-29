@@ -20,6 +20,7 @@ import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.response.photo.get_photo_id_comments_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_id_favorites_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_id_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_id_votes_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_response;
 
 /**
@@ -432,7 +433,38 @@ public class photoInterface {
 		else
 			builder.append("rpp=1&");
 		Log.d("fandroid", url + "/" + builder.toString());
-		return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+		if(token != null)
+			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+		else
+			return null;
+	}
+	
+	/**
+	 * 500px Get_photos_id_votes. returns all users that had liked this photo in <b>an already parsed JSON response object.</b>.
+	 * @param id (Required) the Photo ID to get favorites for.
+	 * @param page return a specific page in the photo stream. Page numbering is 1-based.
+	 * @param rpp the number of results to return. Can not be over 100, default 20.
+	 * @return {@link get_photos_id_votes_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_votes.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public get_photos_id_votes_response get_photos_id_votesEx(String id, int page, int rpp) {
+		String request = id + "/votes?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(rpp >= 1)
+			builder.append("rpp=" + rpp + "&");
+		else
+			builder.append("rpp=1&");
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token != null)
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_id_votes_response.class);
+		else
+			return null;
 	}
 	
 	/**

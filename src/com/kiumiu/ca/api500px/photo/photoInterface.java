@@ -98,20 +98,6 @@ public class photoInterface {
 		return  new RESTTransport(token, consumerKey, consumerSecret).delete(url + "/" + id + "/tags?" + builder.toString());
 	}
 	
-	
-	/**
-	 * 500px GET_photos. This version lets developer to manually build URL request string with valid consumer key or access token.
-	 * @param request request URL for requesting photos from manually built request URL.
-	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
-	 * <p><b>Remark:</b> Request String *Must* starts from ? excluding /photos, for example '?features=popular&only=Animals'.
-	 */
-	public JSONObject get_photos(String request) {
-		if(token == null)
-			return  new RESTTransport(consumerKey).get(url + "/" + request);
-		else
-			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
-	}
-	
 	/**
 	 * 500px GET_photos. Returns a listing of twenty (up to one hundred) photos for a specified photo stream.
 	 * @param (required) feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link Features}'.

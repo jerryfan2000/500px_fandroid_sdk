@@ -17,6 +17,7 @@ import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.response.photo.get_photos_id_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_response;
 
 /**
@@ -182,7 +183,7 @@ public class photoInterface {
 	 * @param include_store True to returns market information about the photo.
 	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
 	 * @param tags True to returns an array of tags for the photo.
-	 * @return get_photos_response See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
+	 * @return {@link get_photos_response} See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
 	 */
 	public get_photos_response get_photosEx(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
 			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {
@@ -274,6 +275,43 @@ public class photoInterface {
 			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px GET_photos_id. Returns detailed information of a single photo in in <b>an already parsed JSON response object.</b>.
+	 * @param id id of data of photo to return.
+	 * @param image_size Should be 1 to 4 while 1 being smallest.
+	 * @param comment set to true to include comments of the photo in response. Comments are returned in order of creation, 20 entries per page.
+	 * @param comment_page return the specified page from the comments listing. Page numbers are 1-based.
+	 * @param tags returns an array of tags for the photo.
+	 * @param items additional {@link parameter} for GET_photos_id request. Follow <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id.md#parameters">500px github</a> for more details.
+	 * @return {@link get_photos_id_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id.md#parameters">500px API</a> for details.
+	 */
+	public get_photos_id_response get_photo_idEx(String id, int image_size, boolean comments, int comment_page, boolean tags) {
+		//Build request parameter here
+		String request = id + "?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(comments)
+			builder.append("comments=true&");
+		
+		if(tags)
+			builder.append("tags=true&");
+		
+		if(comment_page >=1)
+			builder.append("page=" + comment_page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+		else
+			builder.append("image_size=1&");
+		
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_id_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_id_response.class);
 	}
 	
 	/**

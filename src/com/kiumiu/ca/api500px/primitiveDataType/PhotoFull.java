@@ -41,7 +41,7 @@ public class PhotoFull {
 	public double highest_rating;
 	public String highest_rating_date;
 	public int license_type;
-	public int converted;
+	public boolean converted;
 	public HashMap<String,String>[] images;
 	public UserShort user;
 	public Comment[] comments;
@@ -50,6 +50,7 @@ public class PhotoFull {
 	public boolean editors_choice;
 	public String feature;
 	public int collections_count;
+	public String[] tags;
 	
 	//Per user based data
 	public boolean voted;
@@ -431,13 +432,13 @@ public class PhotoFull {
 	/**
 	 * @return the converted
 	 */
-	public int isConverted() {
+	public boolean isConverted() {
 		return converted;
 	}
 	/**
 	 * @param converted the converted to set
 	 */
-	public void setConverted(int converted) {
+	public void setConverted(boolean converted) {
 		this.converted = converted;
 	}
 	/**

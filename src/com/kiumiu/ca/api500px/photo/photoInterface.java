@@ -17,6 +17,7 @@ import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.response.photo.get_photo_id_comments_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_id_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_response;
 
@@ -334,6 +335,28 @@ public class photoInterface {
 			builder.append("page=1&");
 		Log.d("fandroid", url + "/" + builder.toString());
 		return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px Get_photo_id_comments. Returns a listing of twenty comments for the photo in <b>an already parsed JSON response object.</b>.
+	 * @param id (Required) the Photo ID to get comments for.
+	 * @param nested include this parameter to return the comments in nested format.
+	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
+	 * @return {@link get_photo_id_comments_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_comments.md">500px API</a> for details.
+	 */
+	public get_photo_id_comments_response get_photo_id_commentsEx(String id, boolean nested, int page) {
+		String request = id + "/comments?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(nested)
+			builder.append("nested=1&");
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photo_id_comments_response.class);
 	}
 	
 	/**

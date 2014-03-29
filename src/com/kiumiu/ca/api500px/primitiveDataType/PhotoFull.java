@@ -585,5 +585,17 @@ public class PhotoFull {
 	public void setImages(HashMap<String,String>[] images) {
 		this.images = images;
 	}
+	/**
+	 * @return the tags
+	 */
+	public String[] getTags() {
+		return tags;
+	}
+	/**
+	 * @param tags the tags to set
+	 */
+	public void setTags(String[] tags) {
+		this.tags = tags;
+	}
 	
 }

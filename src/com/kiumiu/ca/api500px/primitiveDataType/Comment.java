@@ -15,6 +15,7 @@ public class Comment {
 	public int parent_id;
 	public boolean flagged;
 	public int rating;
+	public Comment[] replies;
 	
 	//fields available with access token
 	public boolean voted;

@@ -22,6 +22,7 @@ import com.kiumiu.ca.api500px.response.photo.get_photos_id_favorites_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_id_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_id_votes_response;
 import com.kiumiu.ca.api500px.response.photo.get_photos_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_search_response;
 
 /**
  * A class which wraps all 500px REST photo end node functions 
@@ -533,6 +534,74 @@ public class photoInterface {
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px GET_photos_search. returns a listing of twenty (up to one hundred) photos from search results for a specified tag, keyword, or location in <b>an already parsed JSON response object.</b>.
+	 * @param term a keyword to search for.
+	 * @param tags a complete tag string to search for.
+	 * @param geo a geo-location point of the format latitude,longitude,radius<units>. Acceptable units are km or mi. (Example format 23.00,123.00,20km)
+	 * @param only an array of String constant defined in {@link category} to return photos from. Note: Case sensitive.
+	 * @param page return a specific page. Page numbering is 1-based.
+	 * @param rpp the number of results to return. Can not be over 100, default 20.
+	 * @param showTags returns an array of tags for each photo.
+	 * @param image_size the photo size to be returned. It has to be an integer: 1 (smallest) to 4 (largest).
+	 * @param sort one of the sort order constant defined in {@link sort}.
+	 * @return {@link get_photos_search_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_search.md">500px API</a> for details.
+	 */
+	public get_photos_search_response get_photos_searchEx(String term, String tags, Location geo, String[] only, int page, int rpp, boolean showTags, int image_size, String sort) {
+		String request = "search?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(term != null)
+			try {
+				builder.append("term=" + URLEncoder.encode(term,"UTF-8") + "&");
+			} catch(Exception e) { e.printStackTrace(); };
+		
+		if(tags != null)
+			try {
+				builder.append("tags=" + URLEncoder.encode(tags, "UTF-8") + "&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(geo != null)
+			try {
+				builder.append("geo=" + geo.toString() + "&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(only != null)
+			try {
+				builder.append("only=");
+				for(int x=0; x<only.length; x++)
+					builder.append(URLEncoder.encode(only[x], "UTF-8") + ",");
+				builder.append("&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(rpp >=1)
+			builder.append("rpp=" + rpp + "&");
+		else
+			builder.append("rpp=20&");
+		
+		if(showTags)
+			builder.append("tags&");
+		
+		if(image_size >=1 && image_size<=4)
+			builder.append("image_size=" + image_size + "&");
+		else
+			builder.append("image_size=1&");
+		
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token != null)
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_search_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_search_response.class);
 	}
 	
 	/**

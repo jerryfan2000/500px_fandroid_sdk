@@ -174,7 +174,7 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px GET_photos. Returns a listing of twenty (up to one hundred) photos for a specified photo stream in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_photos. Returns a listing of twenty (up to one hundred) photos for a specified photo stream in <b>an already parsed JSON response object.</b>
 	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param (required) feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link Features}'.
 	 * @param only String array of names of the category to return photos from. Must be one of the constant in {@link Category}.

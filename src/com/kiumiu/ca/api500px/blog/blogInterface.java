@@ -12,6 +12,7 @@ import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
 import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.primitiveDataType.BlogFull;
 import com.kiumiu.ca.api500px.response.blog.get_blogs_response;
 
 /**
@@ -219,6 +220,20 @@ public class blogInterface {
 			return  new RESTTransport(consumerKey).get(url + "/" + request);
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
+	}
+	
+	/**
+	 * 500px GET_blogs_id. Returns detailed information of a single story in <b>an already parsed JSON response object.</b>.
+	 * @param id (required) - Return information for the specific story.
+	 * @return {@link BlogFull}. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs_id.md">500px API</a> for details.
+	 */
+	public BlogFull get_blogs_idEx(String id) {
+		String request = id;
+		
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + request).toString(), BlogFull.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request).toString(), BlogFull.class);
 	}
 	
 	/**

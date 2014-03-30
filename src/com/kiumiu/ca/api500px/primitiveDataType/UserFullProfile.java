@@ -36,7 +36,7 @@ public class UserFullProfile {
 	public int in_favorites_count;
 	public int friends_count;
 	public boolean admin;
-	public HashMap<String,String> avatars;
+	public HashMap<String,HashMap<String,String>> avatars;
 	
 	//Per user fields
 	public String email;
@@ -293,13 +293,13 @@ public class UserFullProfile {
 	/**
 	 * @return the equipment
 	 */
-	public HashMap<String, String[]> getEquipment() {
+	public HashMap<String,String[]> getEquipment() {
 		return equipment;
 	}
 	/**
 	 * @param equipment the equipment to set
 	 */
-	public void setEquipment(HashMap<String, String[]> equipment) {
+	public void setEquipment(HashMap<String,String[]> equipment) {
 		this.equipment = equipment;
 	}
 	/**
@@ -353,13 +353,13 @@ public class UserFullProfile {
 	/**
 	 * @return the avatars
 	 */
-	public HashMap<String, String> getAvatars() {
+	public HashMap<String,HashMap<String,String>> getAvatars() {
 		return avatars;
 	}
 	/**
 	 * @param avatars the avatars to set
 	 */
-	public void setAvatars(HashMap<String, String> avatars) {
+	public void setAvatars(HashMap<String,HashMap<String,String>> avatars) {
 		this.avatars = avatars;
 	}
 	/**

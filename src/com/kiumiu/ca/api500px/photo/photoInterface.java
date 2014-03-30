@@ -282,7 +282,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px GET_photos_id. Returns detailed information of a single photo in in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_photos_id. Returns detailed information of a single photo in in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param id id of data of photo to return.
 	 * @param image_size Should be 1 to 4 while 1 being smallest.
 	 * @param comment set to true to include comments of the photo in response. Comments are returned in order of creation, 20 entries per page.
@@ -341,7 +342,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px Get_photo_id_comments. Returns a listing of twenty comments for the photo in <b>an already parsed JSON response object.</b>.
+	 * 500px Get_photo_id_comments. Returns a listing of twenty comments for the photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param id (Required) the Photo ID to get comments for.
 	 * @param nested include this parameter to return the comments in nested format.
 	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
@@ -388,7 +390,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px Get_photos_id_favorites. returns all users that had favorite that photo in <b>an already parsed JSON response object.</b>.
+	 * 500px Get_photos_id_favorites. returns all users that had favorite that photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param id (Required) the Photo ID to get favorites for.
 	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
 	 * @param rpp the number of results to return. Can not be over 100, default 20.
@@ -441,7 +444,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px Get_photos_id_votes. returns all users that had liked this photo in <b>an already parsed JSON response object.</b>.
+	 * 500px Get_photos_id_votes. returns all users that had liked this photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param id (Required) the Photo ID to get favorites for.
 	 * @param page return a specific page in the photo stream. Page numbering is 1-based.
 	 * @param rpp the number of results to return. Can not be over 100, default 20.
@@ -537,7 +541,8 @@ public class photoInterface {
 	}
 	
 	/**
-	 * 500px GET_photos_search. returns a listing of twenty (up to one hundred) photos from search results for a specified tag, keyword, or location in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_photos_search. returns a listing of twenty (up to one hundred) photos from search results for a specified tag, keyword, or location in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param term a keyword to search for.
 	 * @param tags a complete tag string to search for.
 	 * @param geo a geo-location point of the format latitude,longitude,radius<units>. Acceptable units are km or mi. (Example format 23.00,123.00,20km)

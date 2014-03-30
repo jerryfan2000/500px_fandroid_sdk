@@ -13,6 +13,7 @@ import com.fivehundredpx.api.auth.AccessToken;
 import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.primitiveDataType.BlogFull;
+import com.kiumiu.ca.api500px.response.blog.get_blogs_id_comments_response;
 import com.kiumiu.ca.api500px.response.blog.get_blogs_response;
 
 /**
@@ -109,7 +110,8 @@ public class blogInterface {
 	}
 	
 	/**
-	 * 500px GET_blogs. Returns a listing of five recent stories by any user (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_blogs. Returns a listing of five recent stories by any user (maximum 100 per page) in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
 	 * @param rpp The number of results to return. Can not be over 100, default 5.
 	 * @return {@link get_blogs_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs.md">500px API</a> for details.
@@ -131,7 +133,8 @@ public class blogInterface {
 	}
 	
 	/**
-	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user id (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user id (maximum 100 per page) in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param userID  Stories to return by user id. Don't be confused with username. User id is an unique integer number that 500px uses to denote an user.
 	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
 	 * @param rpp The number of results to return. Can not be over 100, default 5.
@@ -183,7 +186,8 @@ public class blogInterface {
 	}
 	
 	/**
-	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user name (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user name (maximum 100 per page) in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param userName Stories to return by user name.
 	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
 	 * @param rpp The number of results to return. Can not be over 100, default 5.
@@ -223,7 +227,8 @@ public class blogInterface {
 	}
 	
 	/**
-	 * 500px GET_blogs_id. Returns detailed information of a single story in <b>an already parsed JSON response object.</b>.
+	 * 500px GET_blogs_id. Returns detailed information of a single story in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
 	 * @param id (required) - Return information for the specific story.
 	 * @return {@link BlogFull}. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs_id.md">500px API</a> for details.
 	 */
@@ -252,6 +257,25 @@ public class blogInterface {
 			return  new RESTTransport(consumerKey).get(url + "/" + request);
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
+	}
+	
+	/**
+	 * 500px GET_blogs_id_comments. Returns a listing of twenty comments for a specific Story in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param id (required) Ñ The Story ID to get comments for.
+	 * @param page Return a specific page in the comment listing. Page numbering is 1-based.
+	 * @return {@link get_blogs_id_comments_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs_id_comments.md">500px API</a> for details.
+	 */
+	public get_blogs_id_comments_response get_blogs_id_commentsEx(String id, int page) {
+		String request = id + "/comments?";
+		
+		if(page > 0)
+			request = request + "page=" + page;
+		
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + request).toString(), get_blogs_id_comments_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request).toString(), get_blogs_id_comments_response.class);
 	}
 	
 	/**

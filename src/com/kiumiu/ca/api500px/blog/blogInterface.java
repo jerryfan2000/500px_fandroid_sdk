@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.fivehundredpx.api.auth.AccessToken;
+import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.response.blog.get_blogs_response;
 
 /**
  * A class which wraps all 500px REST blogs end node functions 
@@ -106,6 +108,54 @@ public class blogInterface {
 	}
 	
 	/**
+	 * 500px GET_blogs. Returns a listing of five recent stories by any user (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
+	 * @param rpp The number of results to return. Can not be over 100, default 5.
+	 * @return {@link get_blogs_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs.md">500px API</a> for details.
+	 */
+	public get_blogs_response get_blogs_freshEx(int page, int rpp) {
+		String request = "?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		builder.append("feature=fresh&");
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_blogs_response.class);
+	}
+	
+	/**
+	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user id (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * @param userID  Stories to return by user id. Don't be confused with username. User id is an unique integer number that 500px uses to denote an user.
+	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
+	 * @param rpp The number of results to return. Can not be over 100, default 5.
+	 * @return {@link get_blogs_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs.md">500px API</a> for details.
+	 */
+	public get_blogs_response get_blogs_userIdEx(String userID, int page, int rpp) {
+		String request = "?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		builder.append("feature=user&");
+		try {
+			builder.append("user_id=" + URLEncoder.encode(userID,"UTF-8") + "&");
+		} catch(Exception e) {}
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_blogs_response.class);
+	}
+	
+	/**
 	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user name (maximum 100 per page).
 	 * @param userName Stories to return by user name.
 	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
@@ -129,6 +179,32 @@ public class blogInterface {
 		
 		Log.d("fandroid", url + "/" + builder.toString());
 		return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px GET_blogs. Returns a listing of five recent stories from a specific user name (maximum 100 per page) in <b>an already parsed JSON response object.</b>.
+	 * @param userName Stories to return by user name.
+	 * @param page Return a specific page in the story listing. Page numbering is 1-based.
+	 * @param rpp The number of results to return. Can not be over 100, default 5.
+	 * @return {@link get_blogs_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/blog/GET_blogs.md">500px API</a> for details.
+	 */
+	public get_blogs_response get_blogs_usernameEx(String userName, int page, int rpp) {
+		String request = "?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		builder.append("feature=user&");
+		try {
+			builder.append("username=" + URLEncoder.encode(userName,"UTF-8") + "&");
+		} catch(Exception e) {}
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_blogs_response.class);
 	}
 	
 	/**

@@ -15,6 +15,7 @@ import com.kiumiu.ca.api500px.primitiveDataType.UserFullProfile;
 import com.kiumiu.ca.api500px.response.user.get_users_id_followers_response;
 import com.kiumiu.ca.api500px.response.user.get_users_id_friends_response;
 import com.kiumiu.ca.api500px.response.user.get_users_response;
+import com.kiumiu.ca.api500px.response.user.get_users_search_response;
 
 /**
  * A class which wraps all 500px REST user end node functions 
@@ -157,7 +158,7 @@ public class userInterface {
 	}
 	
 	/**
-	 * 500px GET_users_id_friends. Returns a list of friends for the specified user  in <b>an already parsed JSON response object.</b>
+	 * 500px GET_users_id_friends. Returns a list of friends for the specified user in <b>an already parsed JSON response object.</b>
 	 * @param id (required) Ñ Return information for the specified user ID
 	 * @param page Return the specified page of the resource. Page numbering is 1-based.
 	 * @param rpp Results Per Page, default 20, max 100.
@@ -190,6 +191,18 @@ public class userInterface {
 			return new RESTTransport(consumerKey).get(url + "/search?term=" + search);	
 		else
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/search?term=" + search);	
+	}
+	
+	/**
+	 * 500px GET_users_search. Return listing of ten (up to one hundred) users from search results for a specified search term in <b>an already parsed JSON response object.</b>
+	 * @param search (required) Ñ A keyword to search for.
+	 * @return {@link get_users_search_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_search.md">500px API</a> for details.
+	 */
+	public get_users_search_response get_users_searchEx(String search) {
+		if(token == null)
+			return new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/search?term=" + search).toString(), get_users_search_response.class);	
+		else
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/search?term=" + search).toString(), get_users_search_response.class);	
 	}
 	
 	/**

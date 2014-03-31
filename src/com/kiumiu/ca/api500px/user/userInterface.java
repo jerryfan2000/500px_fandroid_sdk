@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.primitiveDataType.UserFullProfile;
 import com.kiumiu.ca.api500px.response.user.get_users_id_followers_response;
+import com.kiumiu.ca.api500px.response.user.get_users_id_friends_response;
 import com.kiumiu.ca.api500px.response.user.get_users_response;
 
 /**
@@ -153,6 +154,30 @@ public class userInterface {
 			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px GET_users_id_friends. Returns a list of friends for the specified user  in <b>an already parsed JSON response object.</b>
+	 * @param id (required) Ñ Return information for the specified user ID
+	 * @param page Return the specified page of the resource. Page numbering is 1-based.
+	 * @param rpp Results Per Page, default 20, max 100.
+	 * @return {@link get_users_id_friends_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_id_friends.md">500px API</a> for details.
+	 */
+	public get_users_id_friends_response get_users_id_friendsEx(String id, int page, int rpp) {
+		String request = id + "/friends?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_users_id_friends_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_users_id_friends_response.class);
 	}
 	
 	/**

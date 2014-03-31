@@ -9,7 +9,10 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.fivehundredpx.api.auth.AccessToken;
+import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.primitiveDataType.CollectionShort;
+import com.kiumiu.ca.api500px.response.collection.get_collections_response;
 
 
 /**
@@ -73,6 +76,18 @@ public class collectionsInterface {
 	}
 	
 	/**
+	 * 500px GET_collections. Returns a listing of all User's collections and sets in <b>an already parsed JSON response object.</b>
+	 * @return {@link get_collections_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/GET_collections.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public get_collections_response get_collectionsEx() {
+		if(token != null)
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url).toString(), get_collections_response.class);
+		else
+			return null;
+	}
+	
+	/**
 	 * 500px GET_collections_id. Returns a specific collection.
 	 * @param id (required) - the id of a collection to retrun from.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/GET_collections_id.md">500px API</a> for details.
@@ -81,6 +96,19 @@ public class collectionsInterface {
 	public JSONObject get_collections_id(String id) {
 		if(token != null)
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + id);
+		else
+			return null;
+	}
+	
+	/**
+	 * 500px GET_collections_id. Returns a specific collection in <b>an already parsed JSON response object.</b>
+	 * @param id (required) - the id of a collection to retrun from.
+	 * @return {@link CollectionShort} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/GET_collections_id.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public CollectionShort get_collections_idEx(String id) {
+		if(token != null)
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + id).toString(), CollectionShort.class);
 		else
 			return null;
 	}

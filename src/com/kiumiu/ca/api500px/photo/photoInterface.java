@@ -15,7 +15,14 @@ import org.json.JSONObject;
 import android.net.Uri;
 import android.util.Log;
 import com.fivehundredpx.api.auth.AccessToken;
+import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
+import com.kiumiu.ca.api500px.response.photo.get_photo_id_comments_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_id_favorites_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_id_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_id_votes_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_response;
+import com.kiumiu.ca.api500px.response.photo.get_photos_search_response;
 
 /**
  * A class which wraps all 500px REST photo end node functions 
@@ -96,22 +103,8 @@ public class photoInterface {
 		return  new RESTTransport(token, consumerKey, consumerSecret).delete(url + "/" + id + "/tags?" + builder.toString());
 	}
 	
-	
 	/**
-	 * 500px GET_photos. This version lets developer to manually build URL request string with valid consumer key or access token.
-	 * @param request request URL for requesting photos from manually built request URL.
-	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
-	 * <p><b>Remark:</b> Request String *Must* starts from ? excluding /photos, for example '?features=popular&only=Animals'.
-	 */
-	public JSONObject get_photos(String request) {
-		if(token == null)
-			return  new RESTTransport(consumerKey).get(url + "/" + request);
-		else
-			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + request);
-	}
-	
-	/**
-	 * 500px GET_photos. This version lets developer to build URL request string with valid consumer key or access token.
+	 * 500px GET_photos. Returns a listing of twenty (up to one hundred) photos for a specified photo stream.
 	 * @param (required) feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link Features}'.
 	 * @param only String array of names of the category to return photos from. Must be one of the constant in {@link Category}.
 	 * @param exclude String name of the category to exclude photos by. Must be one of the constant in {@link Category}.
@@ -138,46 +131,117 @@ public class photoInterface {
 					builder.append(only[x] + "&");
 				else
 					builder.append(only[x] + ",");
-			
-			if(exclude != null) {
-				builder.append("exclude=");
-				for(int x=0; x<exclude.length; x++)
-					if(x == exclude.length-1)
-						builder.append(exclude[x] + "&");
-					else
-						builder.append(exclude[x] + ",");
-			}
-			
-			if(sort != null)
-				builder.append("sort=" + sort + "&");
-			
-			if(sort_direction != null)
-				builder.append("sort_direction=" + sort_direction + "&");
-			
-			if(page > 0)
-				builder.append("page=" + page + "&");
-			
-			if(rpp > 0)
-				builder.append("rpp=" + rpp + "&");
-			
-			if(image_size >= 1 && image_size <= 4)
-				builder.append("image_size=" + image_size + "&");
-			
-			if(include_store)
-				builder.append("include_store=1&");
-			
-			if(include_states)
-				builder.append("include_states=1&");
-			
-			if(tags)
-				builder.append("tags=1");
 		}
 			
+		if(exclude != null) {
+			builder.append("exclude=");
+			for(int x=0; x<exclude.length; x++)
+				if(x == exclude.length-1)
+					builder.append(exclude[x] + "&");
+				else
+					builder.append(exclude[x] + ",");
+		}
+
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		if(sort_direction != null)
+			builder.append("sort_direction=" + sort_direction + "&");
+
+		if(page > 0)
+			builder.append("page=" + page + "&");
+
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+
+		if(include_store)
+			builder.append("include_store=1&");
+
+		if(include_states)
+			builder.append("include_states=1&");
+
+		if(tags)
+			builder.append("tags=1");
+					
 		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)
 			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
 		else
 			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px GET_photos. Returns a listing of twenty (up to one hundred) photos for a specified photo stream in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param (required) feature photo stream to be retrieved. Default fresh_today. One of the constant in Class '{@link Features}'.
+	 * @param only String array of names of the category to return photos from. Must be one of the constant in {@link Category}.
+	 * @param exclude String name of the category to exclude photos by. Must be one of the constant in {@link Category}.
+	 * @param sort Sort photos in the specified order. Must be one of the constant in {@link Sort}.
+	 * @param sort_direction  Control the order of the sorting. You can provide a sort_direction without providing a sort, in which case the default sort for the requested feature will be adjusted. Must be one of the constant in {@link SortDirection}. 
+	 * @param page Return a specific page in the photo stream. Page numbering is 1-based.
+	 * @param rpp The number of results to return. Can not be over 100, default 20.
+	 * @param image_size The photo size to be returned. It has to be an integer: 1 to 4.
+	 * @param include_store True to returns market information about the photo.
+	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
+	 * @param tags True to returns an array of tags for the photo.
+	 * @return {@link get_photos_response} See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
+	 */
+	public get_photos_response get_photosEx(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
+			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {
+		//Build request parameters here
+		String request = "?features=" + feature + "&";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(only != null) {
+			builder.append("only=");
+			for(int x=0; x<only.length; x++)
+				if(x == only.length-1)
+					builder.append(only[x] + "&");
+				else
+					builder.append(only[x] + ",");
+		}
+			
+		if(exclude != null) {
+			builder.append("exclude=");
+			for(int x=0; x<exclude.length; x++)
+				if(x == exclude.length-1)
+					builder.append(exclude[x] + "&");
+				else
+					builder.append(exclude[x] + ",");
+		}
+
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		if(sort_direction != null)
+			builder.append("sort_direction=" + sort_direction + "&");
+
+		if(page > 0)
+			builder.append("page=" + page + "&");
+
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+
+		if(include_store)
+			builder.append("include_store=1&");
+
+		if(include_states)
+			builder.append("include_states=1&");
+
+		if(tags)
+			builder.append("tags=1");
+			
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_response.class);
+		else
+			return   new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_response.class);
 	}
 	
 	/**
@@ -218,6 +282,44 @@ public class photoInterface {
 	}
 	
 	/**
+	 * 500px GET_photos_id. Returns detailed information of a single photo in in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param id id of data of photo to return.
+	 * @param image_size Should be 1 to 4 while 1 being smallest.
+	 * @param comment set to true to include comments of the photo in response. Comments are returned in order of creation, 20 entries per page.
+	 * @param comment_page return the specified page from the comments listing. Page numbers are 1-based.
+	 * @param tags returns an array of tags for the photo.
+	 * @param items additional {@link parameter} for GET_photos_id request. Follow <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id.md#parameters">500px github</a> for more details.
+	 * @return {@link get_photos_id_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id.md#parameters">500px API</a> for details.
+	 */
+	public get_photos_id_response get_photo_idEx(String id, int image_size, boolean comments, int comment_page, boolean tags) {
+		//Build request parameter here
+		String request = id + "?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(comments)
+			builder.append("comments=true&");
+		
+		if(tags)
+			builder.append("tags=true&");
+		
+		if(comment_page >=1)
+			builder.append("page=" + comment_page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+		else
+			builder.append("image_size=1&");
+		
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_id_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_id_response.class);
+	}
+	
+	/**
 	 * 500px Get_photo_id_comments. Returns a listing of twenty comments for the photo.
 	 * @param id (Required) the Photo ID to get comments for.
 	 * @param nested include this parameter to return the comments in nested format.
@@ -237,6 +339,29 @@ public class photoInterface {
 			builder.append("page=1&");
 		Log.d("fandroid", url + "/" + builder.toString());
 		return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
+	}
+	
+	/**
+	 * 500px Get_photo_id_comments. Returns a listing of twenty comments for the photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param id (Required) the Photo ID to get comments for.
+	 * @param nested include this parameter to return the comments in nested format.
+	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
+	 * @return {@link get_photo_id_comments_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_comments.md">500px API</a> for details.
+	 */
+	public get_photo_id_comments_response get_photo_id_commentsEx(String id, boolean nested, int page) {
+		String request = id + "/comments?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(nested)
+			builder.append("nested=1&");
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photo_id_comments_response.class);
 	}
 	
 	/**
@@ -265,6 +390,32 @@ public class photoInterface {
 	}
 	
 	/**
+	 * 500px Get_photos_id_favorites. returns all users that had favorite that photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param id (Required) the Photo ID to get favorites for.
+	 * @param page return a specific page in the comment listing. Page numbering is 1-based.
+	 * @param rpp the number of results to return. Can not be over 100, default 20.
+	 * @return {@link get_photos_id_favorites_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_favorites.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public get_photos_id_favorites_response get_photos_id_favoritesEx(String id, int page, int rpp) {
+		String request = id + "/favorites?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(rpp >= 1)
+			builder.append("rpp=" + rpp + "&");
+		else
+			builder.append("rpp=20&");
+		Log.d("fandroid", url + "/" + builder.toString());
+		return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_id_favorites_response.class);
+	}
+	
+	/**
 	 * 500px Get_photos_id_votes. returns all users that had liked this photo. Valid access token required.
 	 * @param id (Required) the Photo ID to get favorites for.
 	 * @param page return a specific page in the photo stream. Page numbering is 1-based.
@@ -286,7 +437,39 @@ public class photoInterface {
 		else
 			builder.append("rpp=1&");
 		Log.d("fandroid", url + "/" + builder.toString());
-		return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+		if(token != null)
+			return  new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString());
+		else
+			return null;
+	}
+	
+	/**
+	 * 500px Get_photos_id_votes. returns all users that had liked this photo in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param id (Required) the Photo ID to get favorites for.
+	 * @param page return a specific page in the photo stream. Page numbering is 1-based.
+	 * @param rpp the number of results to return. Can not be over 100, default 20.
+	 * @return {@link get_photos_id_votes_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_id_votes.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
+	 */
+	public get_photos_id_votes_response get_photos_id_votesEx(String id, int page, int rpp) {
+		String request = id + "/votes?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(rpp >= 1)
+			builder.append("rpp=" + rpp + "&");
+		else
+			builder.append("rpp=1&");
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token != null)
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_id_votes_response.class);
+		else
+			return null;
 	}
 	
 	/**
@@ -358,6 +541,75 @@ public class photoInterface {
 	}
 	
 	/**
+	 * 500px GET_photos_search. returns a listing of twenty (up to one hundred) photos from search results for a specified tag, keyword, or location in <b>an already parsed JSON response object.</b>
+	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
+	 * @param term a keyword to search for.
+	 * @param tags a complete tag string to search for.
+	 * @param geo a geo-location point of the format latitude,longitude,radius<units>. Acceptable units are km or mi. (Example format 23.00,123.00,20km)
+	 * @param only an array of String constant defined in {@link category} to return photos from. Note: Case sensitive.
+	 * @param page return a specific page. Page numbering is 1-based.
+	 * @param rpp the number of results to return. Can not be over 100, default 20.
+	 * @param showTags returns an array of tags for each photo.
+	 * @param image_size the photo size to be returned. It has to be an integer: 1 (smallest) to 4 (largest).
+	 * @param sort one of the sort order constant defined in {@link sort}.
+	 * @return {@link get_photos_search_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos_search.md">500px API</a> for details.
+	 */
+	public get_photos_search_response get_photos_searchEx(String term, String tags, Location geo, String[] only, int page, int rpp, boolean showTags, int image_size, String sort) {
+		String request = "search?";
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(term != null)
+			try {
+				builder.append("term=" + URLEncoder.encode(term,"UTF-8") + "&");
+			} catch(Exception e) { e.printStackTrace(); };
+		
+		if(tags != null)
+			try {
+				builder.append("tags=" + URLEncoder.encode(tags, "UTF-8") + "&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(geo != null)
+			try {
+				builder.append("geo=" + geo.toString() + "&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(only != null)
+			try {
+				builder.append("only=");
+				for(int x=0; x<only.length; x++)
+					builder.append(URLEncoder.encode(only[x], "UTF-8") + ",");
+				builder.append("&");
+			} catch(Exception e) { e.printStackTrace(); }
+		
+		if(page >= 1)
+			builder.append("page=" + page + "&");
+		else
+			builder.append("page=1&");
+		
+		if(rpp >=1)
+			builder.append("rpp=" + rpp + "&");
+		else
+			builder.append("rpp=20&");
+		
+		if(showTags)
+			builder.append("tags&");
+		
+		if(image_size >=1 && image_size<=4)
+			builder.append("image_size=" + image_size + "&");
+		else
+			builder.append("image_size=1&");
+		
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token != null)
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_photos_search_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_search_response.class);
+	}
+	
+	/**
 	 * A placeholder for image upload future implementation
 	 * @return null
 	 */
@@ -384,9 +636,10 @@ public class photoInterface {
 	
 	/**
 	 * 500px POST_photos_id_report. Report inappropriate post to 500px with reason defined in {@link report}
-	 * @param id ID of the photo to report.
+	 * @param id ID of the photo to report with one of the reason constant defined in {@link Report}.
 	 * @param reason (required) Ñ Reason for the report.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_report.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_report(String id, int reason) {
 		String request = id + "/report";
@@ -546,7 +799,7 @@ public class photoInterface {
 	}
 	
 	/**
-	 * A placeholder for put photo future implementation
+	 * 500px PUT_photos_id. Allows the client application to update user-editable information on a photo.
 	 * @param query an array list of update query obtained from {@link photoUpdateParams} with photoUpdateParams.toNameValuePair.
 	 * @param id (required) Ñ The Photo ID to update.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/PUT_photos_id.md">500px API</a> for details.

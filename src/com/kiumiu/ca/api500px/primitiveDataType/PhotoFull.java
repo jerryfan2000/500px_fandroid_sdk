@@ -1,6 +1,5 @@
 package com.kiumiu.ca.api500px.primitiveDataType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

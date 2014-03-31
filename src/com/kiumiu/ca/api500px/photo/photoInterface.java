@@ -636,9 +636,10 @@ public class photoInterface {
 	
 	/**
 	 * 500px POST_photos_id_report. Report inappropriate post to 500px with reason defined in {@link report}
-	 * @param id ID of the photo to report.
+	 * @param id ID of the photo to report with one of the reason constant defined in {@link Report}.
 	 * @param reason (required) Ñ Reason for the report.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/POST_photos_id_report.md">500px API</a> for details.
+	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject post_photos_id_report(String id, int reason) {
 		String request = id + "/report";
@@ -798,7 +799,7 @@ public class photoInterface {
 	}
 	
 	/**
-	 * A placeholder for put photo future implementation
+	 * 500px PUT_photos_id. Allows the client application to update user-editable information on a photo.
 	 * @param query an array list of update query obtained from {@link photoUpdateParams} with photoUpdateParams.toNameValuePair.
 	 * @param id (required) Ñ The Photo ID to update.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/PUT_photos_id.md">500px API</a> for details.

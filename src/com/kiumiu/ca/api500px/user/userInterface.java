@@ -16,6 +16,7 @@ import com.kiumiu.ca.api500px.response.user.get_users_id_followers_response;
 import com.kiumiu.ca.api500px.response.user.get_users_id_friends_response;
 import com.kiumiu.ca.api500px.response.user.get_users_response;
 import com.kiumiu.ca.api500px.response.user.get_users_search_response;
+import com.kiumiu.ca.api500px.response.user.get_users_show_response;
 
 /**
  * A class which wraps all 500px REST user end node functions 
@@ -241,6 +242,45 @@ public class userInterface {
 			return new RESTTransport(consumerKey).get(url + "/show?email=" + email);	
 		else
 			return new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?email=" + email);
+		
+	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by userid (don't be confused this with username where userid is a number) in <b>an already parsed JSON response object.</b>
+	 * @param id (required) user to return from with specific user id.
+	 * @return {@link get_users_show_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details.
+	 */
+	public get_users_show_response get_users_show_by_idEx(String id) {	
+		if(token == null)
+			return new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/show?id=" + id).toString(), get_users_show_response.class);	
+		else
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?id=" + id).toString(), get_users_show_response.class);
+		
+	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by username.
+	 * @param username (required) user to return from with specific username.
+	 * @return {@link get_users_show_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details in <b>an already parsed JSON response object.</b>
+	 */
+	public get_users_show_response get_users_show_by_usernameEx(String username) {	
+		if(token == null)
+			return new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/show?username=" + username).toString(), get_users_show_response.class);	
+		else
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?username=" + username).toString(), get_users_show_response.class);
+		
+	}
+	
+	/**
+	 * 500px GET_users_show. Returns the profile information for a specified user by email in <b>an already parsed JSON response object.</b>
+	 * @param email (required) user to return from with specific email.
+	 * @return {@link get_users_show_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_show.md">500px API</a> for details.
+	 */
+	public get_users_show_response get_users_show_by_emailEx(String email) {	
+		if(token == null)
+			return new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/show?email=" + email).toString(), get_users_show_response.class);	
+		else
+			return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/show?email=" + email).toString(), get_users_show_response.class);
 		
 	}
 	

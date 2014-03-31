@@ -12,6 +12,7 @@ import com.fivehundredpx.api.auth.AccessToken;
 import com.google.gson.Gson;
 import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.primitiveDataType.UserFullProfile;
+import com.kiumiu.ca.api500px.response.user.get_users_id_followers_response;
 import com.kiumiu.ca.api500px.response.user.get_users_response;
 
 /**
@@ -63,7 +64,7 @@ public class userInterface {
 	
 	/**
 	 * 500px GET_users. Returns the profile information for the current user.
-	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users.mdd">500px API</a> for details.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public JSONObject get_users() {
@@ -80,6 +81,38 @@ public class userInterface {
 		return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url).toString(), get_users_response.class);
 	}
 	
+	/**
+	 * 500px GET_users_id_followers. Returns a list of users who follow the specified user in <b>an already parsed JSON response object.</b>
+	 * @param id (required) Ñ ID of the user.
+	 * @param page Return the specified page of the resource. Page numbering is 1-based.
+	 * @param rpp Results Per Page, default 20, max 100.
+	 * @return {@link get_users_id_followers_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_id_followers.md">500px API</a> for details.
+	 */
+	public get_users_id_followers_response get_users_id_followersEx(String id, int page, int rpp) {
+		String request = id + "/followers?";
+		
+		StringBuilder builder = new StringBuilder(request);
+		
+		if(page > 0)
+			builder.append("page=" + page + "&");
+		
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+		
+		Log.d("fandroid", url + "/" + builder.toString());
+		if(token == null)
+			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_users_id_followers_response.class);
+		else
+			return  new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url + "/" + builder.toString()).toString(), get_users_id_followers_response.class);
+	}
+	
+	/**
+	 * 500px GET_users_id_followers. Returns a list of users who follow the specified user.
+	 * @param id (required) Ñ ID of the user.
+	 * @param page Return the specified page of the resource. Page numbering is 1-based.
+	 * @param rpp Results Per Page, default 20, max 100.
+	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users_id_followers.md">500px API</a> for details.
+	 */
 	public JSONObject get_users_id_followers(String id, int page, int rpp) {
 		String request = id + "/followers?";
 		

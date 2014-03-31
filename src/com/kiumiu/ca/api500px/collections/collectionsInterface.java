@@ -90,7 +90,7 @@ public class collectionsInterface {
 	/**
 	 * 500px GET_collections_id. Returns a specific collection in <b>an already parsed JSON response object.</b>
 	 * @param id (required) - the id of a collection to retrun from.
-	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/GET_collections_id.md">500px API</a> for details.
+	 * @return {@link CollectionShort} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/collections/GET_collections_id.md">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
 	public CollectionShort get_collections_idEx(String id) {

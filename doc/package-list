@@ -8,6 +8,7 @@ com.kiumiu.ca.api500px.comments
 com.kiumiu.ca.api500px.photo
 com.kiumiu.ca.api500px.primitiveDataType
 com.kiumiu.ca.api500px.response.blog
+com.kiumiu.ca.api500px.response.collection
 com.kiumiu.ca.api500px.response.photo
 com.kiumiu.ca.api500px.response.user
 com.kiumiu.ca.api500px.user

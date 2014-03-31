@@ -10,6 +10,16 @@ Features
 <br>(3) Instead of making raw http_get, http_post.... function call, you can find at least one function in this SDK that can perform a specific 500px end node function call.
 <br>(4) Full javadoc available.
 
+To install
+============
+(1) Add 500px_fandroid_sdk in to eclipse.
+<br>(2) Then in project properties of your newly created project, select 'Android' section.
+<br>(3) Select add, and choose 500px_fandroid_sdk.
+
+To download
+===========
+Go to this page to get latest version: https://github.com/jerryfan2000/500px_fandroid_sdk/releases
+
 To use it
 ==================
 (1) Get access token first by using (If you need to access authentication required features)

@@ -131,41 +131,41 @@ public class photoInterface {
 					builder.append(only[x] + "&");
 				else
 					builder.append(only[x] + ",");
-			
-			if(exclude != null) {
-				builder.append("exclude=");
-				for(int x=0; x<exclude.length; x++)
-					if(x == exclude.length-1)
-						builder.append(exclude[x] + "&");
-					else
-						builder.append(exclude[x] + ",");
-			}
-			
-			if(sort != null)
-				builder.append("sort=" + sort + "&");
-			
-			if(sort_direction != null)
-				builder.append("sort_direction=" + sort_direction + "&");
-			
-			if(page > 0)
-				builder.append("page=" + page + "&");
-			
-			if(rpp > 0)
-				builder.append("rpp=" + rpp + "&");
-			
-			if(image_size >= 1 && image_size <= 4)
-				builder.append("image_size=" + image_size + "&");
-			
-			if(include_store)
-				builder.append("include_store=1&");
-			
-			if(include_states)
-				builder.append("include_states=1&");
-			
-			if(tags)
-				builder.append("tags=1");
 		}
 			
+		if(exclude != null) {
+			builder.append("exclude=");
+			for(int x=0; x<exclude.length; x++)
+				if(x == exclude.length-1)
+					builder.append(exclude[x] + "&");
+				else
+					builder.append(exclude[x] + ",");
+		}
+
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		if(sort_direction != null)
+			builder.append("sort_direction=" + sort_direction + "&");
+
+		if(page > 0)
+			builder.append("page=" + page + "&");
+
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+
+		if(include_store)
+			builder.append("include_store=1&");
+
+		if(include_states)
+			builder.append("include_states=1&");
+
+		if(tags)
+			builder.append("tags=1");
+					
 		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)
 			return  new RESTTransport(consumerKey).get(url + "/" + builder.toString());
@@ -202,40 +202,40 @@ public class photoInterface {
 					builder.append(only[x] + "&");
 				else
 					builder.append(only[x] + ",");
-			
-			if(exclude != null) {
-				builder.append("exclude=");
-				for(int x=0; x<exclude.length; x++)
-					if(x == exclude.length-1)
-						builder.append(exclude[x] + "&");
-					else
-						builder.append(exclude[x] + ",");
-			}
-			
-			if(sort != null)
-				builder.append("sort=" + sort + "&");
-			
-			if(sort_direction != null)
-				builder.append("sort_direction=" + sort_direction + "&");
-			
-			if(page > 0)
-				builder.append("page=" + page + "&");
-			
-			if(rpp > 0)
-				builder.append("rpp=" + rpp + "&");
-			
-			if(image_size >= 1 && image_size <= 4)
-				builder.append("image_size=" + image_size + "&");
-			
-			if(include_store)
-				builder.append("include_store=1&");
-			
-			if(include_states)
-				builder.append("include_states=1&");
-			
-			if(tags)
-				builder.append("tags=1");
 		}
+			
+		if(exclude != null) {
+			builder.append("exclude=");
+			for(int x=0; x<exclude.length; x++)
+				if(x == exclude.length-1)
+					builder.append(exclude[x] + "&");
+				else
+					builder.append(exclude[x] + ",");
+		}
+
+		if(sort != null)
+			builder.append("sort=" + sort + "&");
+
+		if(sort_direction != null)
+			builder.append("sort_direction=" + sort_direction + "&");
+
+		if(page > 0)
+			builder.append("page=" + page + "&");
+
+		if(rpp > 0)
+			builder.append("rpp=" + rpp + "&");
+
+		if(image_size >= 1 && image_size <= 4)
+			builder.append("image_size=" + image_size + "&");
+
+		if(include_store)
+			builder.append("include_store=1&");
+
+		if(include_states)
+			builder.append("include_states=1&");
+
+		if(tags)
+			builder.append("tags=1");
 			
 		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)

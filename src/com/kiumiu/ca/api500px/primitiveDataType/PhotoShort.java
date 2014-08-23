@@ -15,7 +15,7 @@ public class PhotoShort {
 	public String camera;
 	public String lens;
 	public String focal_length;
-	public int iso;
+	public String iso;
 	public String shutter_speed;
 	public String aperture;
 	public int times_viewed;
@@ -126,13 +126,13 @@ public class PhotoShort {
 	/**
 	 * @return the iso
 	 */
-	public int getIso() {
+	public String getIso() {
 		return iso;
 	}
 	/**
 	 * @param iso the iso to set
 	 */
-	public void setIso(int iso) {
+	public void setIso(String iso) {
 		this.iso = iso;
 	}
 	/**

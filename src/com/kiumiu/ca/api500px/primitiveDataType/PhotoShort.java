@@ -490,12 +490,6 @@ public class PhotoShort {
 		this.rating = rating;
 	}
 	/**
-	 * @param highest_rating the highest_rating to set
-	 */
-	public void setHighest_rating(double highest_rating) {
-		this.highest_rating = highest_rating;
-	}
-	/**
 	 * @return the liked
 	 */
 	public boolean isLiked() {

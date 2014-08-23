@@ -14,7 +14,6 @@ import com.kiumiu.ca.api500px.RESTTransport;
 import com.kiumiu.ca.api500px.primitiveDataType.UserFullProfile;
 import com.kiumiu.ca.api500px.response.user.get_users_id_followers_response;
 import com.kiumiu.ca.api500px.response.user.get_users_id_friends_response;
-import com.kiumiu.ca.api500px.response.user.get_users_response;
 import com.kiumiu.ca.api500px.response.user.get_users_search_response;
 import com.kiumiu.ca.api500px.response.user.get_users_show_response;
 
@@ -77,11 +76,11 @@ public class userInterface {
 	/**
 	 * 500px GET_users. Returns the profile information for the current user in <b>an already parsed JSON response object.</b>
 	 * Since 500px is constantly upgrading its API response format. So this version may contain less return key/value pairs than get_photo.
-	 * @return {@link get_users_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users.mdd">500px API</a> for details.
+	 * @return {@link get_users_show_response} object. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/user/GET_users.mdd">500px API</a> for details.
 	 * <p><b>Remark:</b> Requires OAuth authentication.
 	 */
-	public get_users_response get_usersEx() {
-		return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url).toString(), get_users_response.class);
+	public get_users_show_response get_usersEx() {
+		return new Gson().fromJson(new RESTTransport(token, consumerKey, consumerSecret).get(url).toString(), get_users_show_response.class);
 	}
 	
 	/**

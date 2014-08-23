@@ -41,6 +41,7 @@ public class PhotoFull {
 	public String highest_rating_date;
 	public int license_type;
 	public boolean converted;
+	public String image_url;
 	public HashMap<String,String>[] images;
 	public UserShort user;
 	public Comment[] comments;
@@ -447,6 +448,12 @@ public class PhotoFull {
 		return images;
 	}
 	/**
+	 * @return the image_url
+	 */
+	public String getImage_url() {
+		return image_url;
+	}
+	/**
 	 * @param image_size the image_size to set
 	 */
 	public void setImage_size(HashMap<String,String>[] images) {
@@ -595,6 +602,12 @@ public class PhotoFull {
 	 */
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+	/**
+	 * @param url the image url to set
+	 */
+	public void setImage_url(String url) {
+		this.image_url = url;
 	}
 	
 }

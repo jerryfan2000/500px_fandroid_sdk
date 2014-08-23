@@ -116,10 +116,11 @@ public class photoInterface {
 	 * @param include_store True to returns market information about the photo.
 	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
 	 * @param tags True to returns an array of tags for the photo.
+	 * @param user_id User ID of the user to retrieve photos from when feature is set to User.
 	 * @return JSON response. See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
 	 */
 	public JSONObject get_photos(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
-			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {
+			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags, String user_id) {
 		//Build request parameters here
 		String request = "?features=" + feature + "&";
 		StringBuilder builder = new StringBuilder(request);
@@ -165,6 +166,9 @@ public class photoInterface {
 
 		if(tags)
 			builder.append("tags=1");
+		
+		if(user_id != null)
+			builder.append("user_id=" + user_id);
 					
 		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)
@@ -187,10 +191,11 @@ public class photoInterface {
 	 * @param include_store True to returns market information about the photo.
 	 * @param include_states True to returns state of the photo for the currently logged in user and authenticated request.
 	 * @param tags True to returns an array of tags for the photo.
+	 * @param user_id User ID of the user to retrieve photos from when feature is set to User.
 	 * @return {@link get_photos_response} See <a href="https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md">500px API</a> for details.
 	 */
 	public get_photos_response get_photosEx(String feature, String[] only, String[] exclude, String sort, String sort_direction, 
-			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags) {
+			int page, int rpp, int image_size, boolean include_store, boolean include_states, boolean tags, String user_id) {
 		//Build request parameters here
 		String request = "?features=" + feature + "&";
 		StringBuilder builder = new StringBuilder(request);
@@ -235,7 +240,10 @@ public class photoInterface {
 			builder.append("include_states=1&");
 
 		if(tags)
-			builder.append("tags=1");
+			builder.append("tags=1&");
+		
+		if(user_id != null)
+			builder.append("user_id=" + user_id);
 			
 		Log.d("fandroid", url + "/" + builder.toString());
 		if(token == null)

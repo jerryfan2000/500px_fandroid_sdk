@@ -246,7 +246,6 @@ public class photoInterface {
 			builder.append("user_id=" + user_id);
 			
 		Log.d("fandroid", url + "/" + builder.toString());
-		Log.d("fandroid", new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString());
 		if(token == null)
 			return  new Gson().fromJson(new RESTTransport(consumerKey).get(url + "/" + builder.toString()).toString(), get_photos_response.class);
 		else

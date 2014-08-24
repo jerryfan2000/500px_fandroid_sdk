@@ -1,11 +1,15 @@
 package com.kiumiu.ca.api500px.primitiveDataType;
 
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * User object in short format. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.
  * @author Jerry Fan
  *
  */
-public class UserShort {
+public class UserShort implements Parcelable {
 	public int id;
 	public String username;
 	public String firstname;
@@ -18,6 +22,9 @@ public class UserShort {
 	public int followers_count;
 	public int affection;
 	
+	public UserShort (Parcel in) {
+		readFromParcel(in);
+    }
 	/**
 	 * @return the id
 	 */
@@ -152,4 +159,48 @@ public class UserShort {
 	public void setAffection(int affection) {
 		this.affection = affection;
 	}
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public void readFromParcel(Parcel in) {
+		affection = in.readInt();
+		city = in.readString();
+		country = in.readString();
+		firstname = in.readString();
+		followers_count = in.readInt();
+		fullname = in.readString();
+		id = in.readInt();
+		lastname = in.readString();
+		upgrade_status = in.readInt();
+		username = in.readString();
+		userpic_url = in.readString();
+	}
+	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(affection);
+		dest.writeString(city);
+		dest.writeString(country);
+		dest.writeString(firstname);
+		dest.writeInt(followers_count);
+		dest.writeString(fullname);
+		dest.writeInt(id);
+		dest.writeString(lastname);
+		dest.writeInt(upgrade_status);
+		dest.writeString(username);
+		dest.writeString(userpic_url);
+	}
+	
+	public static final Parcelable.Creator<UserShort> CREATOR = new Parcelable.Creator<UserShort>() {
+        public UserShort createFromParcel(Parcel in) {
+            return new UserShort(in); 
+        }
+
+        @Override
+        public UserShort[] newArray(int size) {
+            return new UserShort [size];
+        }
+    };
 }

@@ -2,12 +2,16 @@ package com.kiumiu.ca.api500px.primitiveDataType;
 
 import java.util.HashMap;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Photo object in short format. To read more about each fields, please go to <a href="https://github.com/500px/api-documentation/blob/master/basics/formats_and_terms.md#500px-photo-terms">this page</a> for details.
  * @author Jerry Fan
  *
  */
-public class PhotoShort {
+public class PhotoShort implements Parcelable {
 	//data objects
 	public int id;
 	public String name;
@@ -51,6 +55,9 @@ public class PhotoShort {
 	public boolean favorited;
 	public boolean purchased;
 	
+	public PhotoShort (Parcel in) {
+		readFromParcel(in);
+    }
 	/**
 	 * @return the id
 	 */
@@ -524,6 +531,121 @@ public class PhotoShort {
 	 */
 	public void setPurchased(boolean purchased) {
 		this.purchased = purchased;
+	}
+	
+	 public static final Parcelable.Creator<PhotoShort> CREATOR = new Parcelable.Creator<PhotoShort>() {
+	        public PhotoShort createFromParcel(Parcel in) {
+	            return new PhotoShort(in); 
+	        }
+
+			@Override
+			public PhotoShort[] newArray(int size) {
+				return new PhotoShort[size];
+			}
+	 };
+	
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(aperture);
+		dest.writeString(camera);
+		dest.writeInt(category);
+		dest.writeInt(collections_count);
+		dest.writeInt(comments_count);
+		dest.writeInt(converted);
+		dest.writeString(created_at);
+		dest.writeString(description);
+		dest.writeInt(favorited ? 1 : 0);
+		dest.writeInt(favorites_count);
+		dest.writeString(focal_length);
+		dest.writeInt(for_sale ? 1 : 0);
+		dest.writeInt(height);
+		dest.writeDouble(highest_rating);
+		dest.writeString(highest_rating_date);
+		dest.writeInt(id);
+		dest.writeString(image_url);
+		Bundle map = new Bundle();
+		dest.writeInt(images.length);
+		for(int x=0 ; x<images.length ; x++)
+			map.putSerializable("" + x, images[x]);
+		dest.writeBundle(map);
+		dest.writeString(iso);
+		dest.writeString(latitude);
+		dest.writeString(lens);
+		dest.writeInt(license_type);
+		dest.writeInt(liked ? 1 : 0);
+		dest.writeString(location);
+		dest.writeString(longitude);
+		dest.writeString(name);
+		dest.writeInt(nsfw ? 1 : 0);
+		dest.writeInt(positive_votes_count);
+		dest.writeInt(privacy ? 1 : 0);
+		dest.writeInt(purchased ? 1 : 0);
+		dest.writeDouble(rating);
+		dest.writeInt(sales_count);
+		dest.writeString(shutter_speed);
+		dest.writeInt(status);
+		dest.writeString(taken_at);
+		dest.writeInt(times_viewed);
+		dest.writeParcelable(user, flags);
+		dest.writeInt(votes_count);
+		dest.writeInt(width);
+	}
+	
+	public void readFromParcel(Parcel in) {
+		aperture = in.readString();
+		camera = in.readString();
+		category = in.readInt();
+		collections_count = in.readInt();
+		comments_count = in.readInt();
+		converted = in.readInt();
+		created_at = in.readString();
+		description = in.readString();
+		favorited = in.readInt() == 1 ? true : false;
+		favorites_count = in.readInt();
+		focal_length = in.readString();
+		for_sale = in.readInt() == 1 ? true : false;
+		height = in.readInt();
+		highest_rating = in.readDouble();
+		highest_rating_date = in.readString();
+		id = in.readInt();
+		image_url = in.readString();
+		int length = in.readInt();
+		
+		//Read images array
+		images = new HashMap[length];
+		Bundle map = new Bundle();
+		map = in.readBundle();
+		for(int x=0 ; x<length ; x++) {
+			images[x] = (HashMap<String, String>) map.getSerializable(new Integer(x).toString());
+		}
+
+		iso = in.readString();
+		latitude = in.readString();
+		lens = in.readString();
+		license_type = in.readInt();
+		liked = in.readInt() == 1 ? true : false;
+		location = in.readString();
+		longitude = in.readString();
+		name = in.readString();
+		nsfw = in.readInt() == 1 ? true : false;
+		positive_votes_count = in.readInt();
+		privacy = in.readInt() == 1 ? true : false;
+		purchased = in.readInt() == 1 ? true : false;
+		rating = in.readDouble();
+		sales_count = in.readInt();
+		shutter_speed = in.readString();
+		status = in.readInt();
+		taken_at = in.readString();
+		times_viewed = in.readInt();
+		user = in.readParcelable(getClass().getClassLoader());
+		votes_count = in.readInt();
+		width = in.readInt();
 	}
 	
 }

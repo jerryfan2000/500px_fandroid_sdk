@@ -97,7 +97,7 @@ public class PxApi {
      */
     public photoInterface getPhotoInterface() {
     	if(accessToken != null)
-    		return new photoInterface(accessToken, consumerKey, consumerKey);
+    		return new photoInterface(accessToken, consumerKey, consumerSecret);
     	else
     		return new photoInterface(consumerKey, consumerSecret);
     }

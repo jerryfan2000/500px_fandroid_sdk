@@ -22,9 +22,10 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
 import android.util.Log;
+
 import com.fivehundredpx.api.auth.AccessToken;
-import com.kiumiu.ca.api500px.photo.photoInterface;
 
 /**
  * Utility class for handling REST Http command
@@ -115,6 +116,9 @@ public class RESTTransport {
     }
 
     private JSONObject handle(HttpUriRequest request) {
+    	
+    	boolean isFailed = false;
+    	
         try {
             DefaultHttpClient client = new DefaultHttpClient();
 
@@ -126,7 +130,7 @@ public class RESTTransport {
                         "Error, statusCode not OK(%d). for url: %s",
                         statusCode, request.getURI().toString());
                 Log.e(TAG, msg);
-                return null;
+                isFailed = true;
             }
 
             HttpEntity responseEntity = response.getEntity();
@@ -140,6 +144,11 @@ public class RESTTransport {
             }
 
             JSONObject json = new JSONObject(total.toString());
+            if(isFailed) {
+            	Log.e(TAG, json.toString());
+            	return null;
+            }
+            
             return json;
         } catch (Exception e) {
             Log.e(TAG, "Error obtaining response from 500px api.", e);
